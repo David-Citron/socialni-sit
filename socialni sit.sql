@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`prispevek` (
   `pridano` DATETIME NOT NULL,
   `uzivatel_id` INT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_prispevek_uzivatel_idx` (`uzivatel_id` ASC) VISIBLE,
+  INDEX `fk_prispevek_uzivatel_idx` (`uzivatel_id` ASC)  ,
   CONSTRAINT `fk_prispevek_uzivatel`
     FOREIGN KEY (`uzivatel_id`)
     REFERENCES `mydb`.`uzivatel` (`id`)
@@ -71,8 +71,8 @@ CREATE TABLE IF NOT EXISTS `mydb`.`komentar` (
   `prispevek_id` INT NOT NULL,
   `uzivatel_id` INT NOT NULL,
   PRIMARY KEY (`id`, `prispevek_id`, `uzivatel_id`),
-  INDEX `fk_komentar_prispevek1_idx` (`prispevek_id` ASC) VISIBLE,
-  INDEX `fk_komentar_uzivatel1_idx` (`uzivatel_id` ASC) VISIBLE,
+  INDEX `fk_komentar_prispevek1_idx` (`prispevek_id` ASC)  ,
+  INDEX `fk_komentar_uzivatel1_idx` (`uzivatel_id` ASC)  ,
   CONSTRAINT `fk_komentar_prispevek1`
     FOREIGN KEY (`prispevek_id`)
     REFERENCES `mydb`.`prispevek` (`id`)
@@ -95,8 +95,8 @@ CREATE TABLE IF NOT EXISTS `mydb`.`palec_nahoru` (
   `prispevek_id` INT NOT NULL,
   `uzivatel_id` INT NOT NULL,
   PRIMARY KEY (`prispevek_id`, `uzivatel_id`),
-  INDEX `fk_lajk_uzivatel1_idx` (`uzivatel_id` ASC) VISIBLE,
-  INDEX `fk_lajk_prispevek1_idx` (`prispevek_id` ASC) VISIBLE,
+  INDEX `fk_lajk_uzivatel1_idx` (`uzivatel_id` ASC)  ,
+  INDEX `fk_lajk_prispevek1_idx` (`prispevek_id` ASC)  ,
   CONSTRAINT `fk_lajk_uzivatel1`
     FOREIGN KEY (`uzivatel_id`)
     REFERENCES `mydb`.`uzivatel` (`id`)
@@ -119,8 +119,8 @@ CREATE TABLE IF NOT EXISTS `mydb`.`palec_dolu` (
   `prispevek_id` INT NOT NULL,
   `uzivatel_id` INT NOT NULL,
   PRIMARY KEY (`prispevek_id`, `uzivatel_id`),
-  INDEX `fk_prispevek_has_uzivatel_uzivatel1_idx` (`uzivatel_id` ASC) VISIBLE,
-  INDEX `fk_prispevek_has_uzivatel_prispevek1_idx` (`prispevek_id` ASC) VISIBLE,
+  INDEX `fk_prispevek_has_uzivatel_uzivatel1_idx` (`uzivatel_id` ASC)  ,
+  INDEX `fk_prispevek_has_uzivatel_prispevek1_idx` (`prispevek_id` ASC)  ,
   CONSTRAINT `fk_prispevek_has_uzivatel_prispevek1`
     FOREIGN KEY (`prispevek_id`)
     REFERENCES `mydb`.`prispevek` (`id`)
