@@ -27,7 +27,7 @@ class Database extends Config
     public array $default = [
         'DSN'          => '',
         'hostname'     => 'sql6.webzdarma.cz',
-        'username'     => 'socialnisitp0080',
+        'username'     => 'socialnisitp0080@webzdarma.sql',
         'password'     => 'SocSit2029!',
         'database'     => 'socialnisitp0080',
         'DBDriver'     => 'MySQLi',
