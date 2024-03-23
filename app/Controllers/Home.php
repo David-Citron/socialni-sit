@@ -6,7 +6,11 @@ class Home extends BaseController
 {
     public function index()
     {
-        return view('welcome_message');
+        $db = \Config\Database::connect();
+        $query = $db->query('SELECT * FROM uzivatel');
+        $data['uzivatel'] = $query->getResult();
+        var_dump($data);
+        //return view('welcome_message');
     }
 
     public function showSignInForm()
