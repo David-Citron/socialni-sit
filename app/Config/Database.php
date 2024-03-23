@@ -26,10 +26,10 @@ class Database extends Config
      */
     public array $default = [
         'DSN'          => '',
-        'hostname'     => 'localhost',
-        'username'     => '',
-        'password'     => '',
-        'database'     => '',
+        'hostname'     => 'sql6.webzdarma.cz',
+        'username'     => 'socialnisitp0080',
+        'password'     => 'SocSit2029!',
+        'database'     => 'socialnisitp0080',
         'DBDriver'     => 'MySQLi',
         'DBPrefix'     => '',
         'pConnect'     => false,
