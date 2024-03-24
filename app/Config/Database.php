@@ -3,6 +3,7 @@
 namespace Config;
 
 use CodeIgniter\Database\Config;
+use Config\DatabaseLoader;
 
 /**
  * Database Configuration
@@ -22,14 +23,20 @@ class Database extends Config
     public string $defaultGroup = 'default';
 
     /**
+     * Toggles usage of database config file loading
+     * through DatabaseLoader class.
+     */
+    public bool $useConfigFile = true;
+
+    /**
      * The default database connection.
      */
     public array $default = [
         'DSN'          => '',
-        'hostname'     => 'sql11.freemysqlhosting.net',
-        'username'     => 'sql11693801',
-        'password'     => 'IkZJkpN86Z',
-        'database'     => 'sql11693801',
+        'hostname'     => 'localhost',
+        'username'     => 'root',
+        'password'     => '',
+        'database'     => 'socialni-sit',
         'DBDriver'     => 'MySQLi',
         'DBPrefix'     => '',
         'pConnect'     => false,
@@ -74,7 +81,13 @@ class Database extends Config
     public function __construct()
     {
         parent::__construct();
-
+        // Load data through DatabaseLoader class if useConfigFile is
+        // set to true.
+        if ($this->useConfigFile)
+        {
+            $loader = new DatabaseLoader();
+            $this->default = $loader->getData();
+        }
         // Ensure that we always set the database group to 'tests' if
         // we are currently running an automated test suite, so that
         // we don't overwrite live data on accident.
