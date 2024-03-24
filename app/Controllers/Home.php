@@ -7,12 +7,8 @@ class Home extends BaseController
     public function index()
     {
         $db = \Config\Database::connect();
-        
-        if ($db->initialize()) {
-            echo "Database connection successful!";
-        } else {
-            echo "Failed to connect to the database.";
-        }
+        $query = $db->query('SELECT * FROM uzivatel');
+        var_dump($query->getResult());
     }
 
     public function showSignInForm()
