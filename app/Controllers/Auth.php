@@ -75,4 +75,11 @@ class Auth extends BaseController
             return false;
         }
     }
+
+    function logOut()
+    {
+        $this->session->remove('username');
+        $this->session->remove('password');
+        return redirect()->to('login');
+    }
 }
