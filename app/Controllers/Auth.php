@@ -25,15 +25,32 @@ class Auth extends BaseController
 
     function login()
     {
-        $username = $this->request->getVar('name');
-        $password = password_hash($this->request->getVar('password'), PASSWORD_DEFAULT);
-        $userData = $this->userModel->where('uzivatelske_jmeno', $username)->first();
-        if (strcmp($password, $userData->heslo))
+        $loginName = $this->request->getVar('name');
+        $password = $this->request->getVar('password');
+
+        $accountByEmail = $this->userModel->where('email', $loginName)->first();
+        $accountByUsername = $this->userModel->where('uzivatelske_jmeno', $loginName)->first();
+
+        if(isset($accountByEmail))
         {
-            return redirect()->to('/');
+            $userData = $accountByEmail;
         }else
         {
-            echo 'Login failed!';
+            $userData = $accountByUsername;
+        }
+
+        if(!isset($userData))
+        {
+            echo 'Wrong username or email';
+            return;
+        }
+
+        if (password_verify($password, $userData->heslo) == true)
+        {
+            echo 'Logged in';
+        }else
+        {
+            echo 'Wrong password';
         }
     }
 }
