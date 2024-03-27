@@ -1,4 +1,5 @@
 writable/debugbar/*
 writable/cache/*
 writable/logs/*
+writable/session/*
 database.json
