@@ -7,10 +7,10 @@ use CodeIgniter\Router\RouteCollection;
  */
 
 // Routes for client side
-$routes->get('/', 'Home::index', ['filter' => 'auth']);
+$routes->get('/', 'Home::showMainPage', ['filter' => 'auth']);
 $routes->get('login', 'Home::showSignInForm');
 $routes->get('register', 'Home::showSignUpForm');
-$routes->get('mainPage', 'Home::showContributions');
+$routes->get('accounts', 'Home::showAccounts', ['filter' => 'auth']);
 
 // Routes for server side
 $routes->get('logout', 'Auth::logOut');
