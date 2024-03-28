@@ -51,6 +51,13 @@ class Auth extends BaseController
         {
             $this->session->set('username', $userData->uzivatelske_jmeno);
             $this->session->set('password', $userData->heslo);
+            if($userData->admin == 1)
+            {
+                $this->session->set('admin', true);
+            }else
+            {
+                $this->session->set('admin', false);
+            }
             return redirect()->to('/');
         }else
         {
@@ -80,6 +87,7 @@ class Auth extends BaseController
     {
         $this->session->remove('username');
         $this->session->remove('password');
+        $this->session->remove('admin');
         return redirect()->to('login');
     }
 }
