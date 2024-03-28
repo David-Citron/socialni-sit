@@ -26,6 +26,7 @@ class Auth extends BaseController
             'datum_narozeni' => $this->request->getVar('birthday')
         ];
         $this->userModel->insert($newUser);
+        return redirect()->to('/');
     }
 
     // Method login tries to log user into the system
