@@ -26,6 +26,7 @@ class Auth extends BaseController
             'datum_narozeni' => $this->request->getVar('birthday')
         ];
         $this->userModel->insert($newUser);
+        $this->setSessionData($newUser);
         return redirect()->to('/');
     }
 
@@ -56,15 +57,7 @@ class Auth extends BaseController
 
         if (password_verify($password, $userData->heslo))
         {
-            $this->session->set('username', $userData->uzivatelske_jmeno);
-            $this->session->set('password', $userData->heslo);
-            if($userData->admin == 1)
-            {
-                $this->session->set('admin', true);
-            }else
-            {
-                $this->session->set('admin', false);
-            }
+            $this->setSessionData($userData);
             return redirect()->to('/');
         }else
         {
@@ -100,5 +93,20 @@ class Auth extends BaseController
         $this->session->remove('password');
         $this->session->remove('admin');
         return redirect()->to('login');
+    }
+
+    // This method sets all required data into current session
+    // Parameter data should receive array consisting of user data
+    function setSessionData($data)
+    {
+        $this->session->set('username', $data->uzivatelske_jmeno);
+        $this->session->set('password', $data->heslo);
+        if(isset($data->admin) && $data->admin == 1)
+        {
+            $this->session->set('admin', true);
+        }else
+        {
+            $this->session->set('admin', false);
+        }
     }
 }
