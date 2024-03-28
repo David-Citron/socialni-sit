@@ -86,7 +86,7 @@ class Auth extends BaseController
         }
     }
 
-    // After calling this method user gets logged out
+    // User gets logged out after calling this method
     function logOut()
     {
         $this->session->remove('username');
