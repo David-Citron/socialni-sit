@@ -8,6 +8,7 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('/', 'Home::index', ['filter' => 'auth']);
 $routes->get('login', 'Home::showSignInForm');
 $routes->get('register', 'Home::showSignUpForm');
+$routes->get('mainPage', 'Home::showContributions');
 
 $routes->get('logout', 'Auth::logOut');
 $routes->post('register', 'Auth::register');
