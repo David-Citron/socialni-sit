@@ -57,7 +57,7 @@ class Auth extends BaseController
 
         if (password_verify($password, $userData->heslo))
         {
-            $this->setSessionData($userData);
+            $this->setSessionData((array)$userData);
             return redirect()->to('/');
         }else
         {
@@ -99,9 +99,9 @@ class Auth extends BaseController
     // Parameter data should receive array consisting of user data
     function setSessionData($data)
     {
-        $this->session->set('username', $data->uzivatelske_jmeno);
-        $this->session->set('password', $data->heslo);
-        if(isset($data->admin) && $data->admin == 1)
+        $this->session->set('username', $data['uzivatelske_jmeno']);
+        $this->session->set('password', $data['heslo']);
+        if(isset($data['admin']) && $data['admin'] == 1)
         {
             $this->session->set('admin', true);
         }else
