@@ -14,6 +14,9 @@ class Auth extends BaseController
         $this->session = session();
     }
     
+    // Method register tries to create a new user account record in database
+    // It is optimized for receiving POST data
+    // Passwords get hashed before saving
     function register()
     {
         $newUser = [
@@ -25,6 +28,9 @@ class Auth extends BaseController
         $this->userModel->insert($newUser);
     }
 
+    // Method login tries to log user into the system
+    // It is optimized for receiving POST data
+    // If user gets logged in he gets redirected to home page
     function login()
     {
         $loginName = $this->request->getVar('name');
@@ -65,6 +71,9 @@ class Auth extends BaseController
         }
     }
 
+    // This method is primary made for AuthFilter
+    // It returns true if user is logged in
+    // When this method returns false it means user is not logged in
     function checkLogin()
     {
         $username = $this->session->get('username');
@@ -83,6 +92,7 @@ class Auth extends BaseController
         }
     }
 
+    // After calling this method user gets logged out
     function logOut()
     {
         $this->session->remove('username');
