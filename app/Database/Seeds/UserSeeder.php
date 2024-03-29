@@ -12,7 +12,7 @@ class UserSeeder extends Seeder
         $faker = \Faker\Factory::create();
         $userModel = new UserModel();
         for ($i = 0; $i < 2; $i++) {
-            $username = $faker->name;
+            $username = $faker->UserName;
             $password = $username;
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
             $data = [
