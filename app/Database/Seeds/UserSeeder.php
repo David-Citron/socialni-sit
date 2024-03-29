@@ -11,8 +11,8 @@ class UserSeeder extends Seeder
     {
         $faker = \Faker\Factory::create();
         $userModel = new UserModel();
-        for ($i = 0; $i < 100; $i++) {
-            $username = 'user' . $i;
+        for ($i = 0; $i < 2; $i++) {
+            $username = $faker->name;
             $password = $username;
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
             $data = [
