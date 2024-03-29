@@ -10,7 +10,7 @@ class PostModel extends Model
     protected $primaryKey = 'id';
     protected $useAutoIncrement = true;
     protected $returnType = 'object';
-    protected $allowedFields = ['text', 'obrazek', 'pocet_lajku', 'pocet_komentaru', 'uzivatel_id'];
+    protected $allowedFields = ['text', 'obrazek', 'pocet_palcu_nahoru', 'pocet_palcu_dolu', 'pocet_komentaru', 'uzivatel_id'];
     protected $useTimestamps = true;
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'pridano';
