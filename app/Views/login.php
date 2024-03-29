@@ -12,8 +12,8 @@
 </head>
 
 <body>
-    <main class="row d-flex justify-content-center align-items-center p-5 m-0">
-        <center>
+    <main class="row d-flex justify-content-center align-items-center p-5 m-0 auth-main">
+        <center class="pt-1">
             <div class="card auth-card pt-2">
                 <form method="POST" action="login">
                     <div class="my-2 mt-5 auth-input-div mx-auto">

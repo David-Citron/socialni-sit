@@ -61,3 +61,24 @@ form{
 .auth-wrap{
     width: 1000px;
 }
+
+@media screen and (max-width: 900px) {
+    .auth-main{
+        padding: 0!important;
+    }
+
+    .auth-card{
+        width: 100%;
+        border-radius: 5rem;
+    }
+
+    .auth-input{
+        border-radius: 2rem;
+        font-size: medium;
+        padding: 10px;
+    }
+
+    form{
+        padding: 1rem;
+    }
+}
