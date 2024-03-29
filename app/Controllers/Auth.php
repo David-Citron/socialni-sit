@@ -86,6 +86,18 @@ class Auth extends BaseController
         }
     }
 
+    // Method checks if the logged in user has admin privileges
+    // Returns true if he does
+    // Returns false if he doesn't or when he is not logged in
+    function checkAdmin()
+    {
+        if(!$this->session->has('admin'))
+        {
+            return false;
+        }
+        return $this->session->get('admin');
+    }
+
     // User gets logged out after calling this method
     function logOut()
     {
