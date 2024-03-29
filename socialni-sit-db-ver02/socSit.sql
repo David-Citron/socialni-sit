@@ -39,7 +39,8 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `socialni-sit`.`prispevek` (
   `id` INT NOT NULL,
   `text` VARCHAR(255) NOT NULL,
-  `pocet_lajku` INT NOT NULL,
+  `pocet_palcu_nahoru` INT NOT NULL,
+  `pocet_palcu_dolu` INT NOT NULL,
   `pocet_komentaru` INT NOT NULL,
   `pridano` DATETIME NOT NULL,
   `uzivatel_id` INT NOT NULL,
