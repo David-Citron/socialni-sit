@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 use App\Models\UserModel;
+use DateTime;
 
 class Auth extends BaseController
 {
@@ -20,12 +21,21 @@ class Auth extends BaseController
     // Passwords get hashed before saving
     function register()
     {
-        $newUser = [
+        $data = [
             'uzivatelske_jmeno' => $this->request->getVar('name'),
-            'heslo' => password_hash($this->request->getVar('password'), PASSWORD_DEFAULT),
+            'heslo' => $this->request->getVar('password'),
+            'heslo2' => $this->request->getVar('password2'),
             'email' => $this->request->getVar('email'),
             'datum_narozeni' => $this->request->getVar('birthday')
         ];
+        
+        if (!$this->validateRegistration($data))
+        {
+            return redirect()->to('register');
+        }
+
+        $newUser = $this->refactorRegistrationData($data);
+
         $this->userModel->insert($newUser);
         $this->setSessionData($newUser);
         return redirect()->to('/');
@@ -123,5 +133,69 @@ class Auth extends BaseController
         {
             $this->session->set('admin', false);
         }
+    }
+
+    // This method validates array of data which has following content:
+    // uzivatelske_jmeno - string
+    // email - string
+    // heslo1 - string
+    // heslo2 - string
+    // datum_narozeni - date
+    // Returns true if data passed validation
+    // Returns false if data didn't pass validation
+    function validateRegistration($data)
+    {
+        $data = (array)$data;
+
+        // Unique username validation
+        $existingAccount = $this->userModel->where('uzivatelske_jmeno', $data['uzivatelske_jmeno'])->first();
+        if (isset($existingAccount))
+        {
+            $this->session->setFlashdata('error', 'Uživatelské jméno již existuje');
+            return false;
+        }
+
+        // Unique email validation
+        $existingAccount = $this->userModel->where('email', $data['email'])->first();
+        if (isset($existingAccount))
+        {
+            $this->session->setFlashdata('error', 'Email již existuje');
+            return false;
+        }
+
+        // Passwords matching validation
+        if (strcmp($data['heslo'], $data['heslo2']) != 0)
+        {
+            $this->session->setFlashdata('error', 'Hesla se neshodují');
+            return false;
+        }
+
+        // Age validation
+        $birthDate = new DateTime($data['datum_narozeni']);
+        $currentDate = new DateTime();
+
+        $age = $birthDate->diff($currentDate)->y;
+
+        if ($age < 18) 
+        {
+            $this->session->setFlashdata('error', 'Musí vám být víc než 18 let');
+            return false;
+        }
+
+        return true;
+    }
+
+    // This method takes array of data and removes unnecesary content
+    // Returns array of data ready for database insertion
+    function refactorRegistrationData($data)
+    {
+        $data = (array)$data;
+        $newUser = [
+            'uzivatelske_jmeno' => $data['uzivatelske_jmeno'],
+            'heslo' => password_hash($data['heslo'], PASSWORD_DEFAULT),
+            'email' => $data['email'],
+            'datum_narozeni' => $data['datum_narozeni']
+        ];
+        return $newUser;
     }
 }

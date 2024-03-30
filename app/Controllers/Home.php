@@ -35,7 +35,8 @@ class Home extends BaseController
     
     public function showSignUpForm()
     {
-        return view('register.php');
+        $data['error'] = $this->session->getFlashdata('error');
+        return view('register.php', $data);
     }
     public function showMainPage()
     {
