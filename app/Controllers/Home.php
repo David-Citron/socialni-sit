@@ -4,6 +4,13 @@ namespace App\Controllers;
 
 class Home extends BaseController
 {
+    var $session;
+
+    public function __construct()
+    {
+        $this->session = session();
+    }
+    
     public function showAccounts()
     {
         $db = \Config\Database::connect();
@@ -22,7 +29,8 @@ class Home extends BaseController
 
     public function showSignInForm()
     {
-        return view('login.php');
+        $data['error'] = $this->session->getFlashdata('error');
+        return view('login.php', $data);
     }
     
     public function showSignUpForm()
