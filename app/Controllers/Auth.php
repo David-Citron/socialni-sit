@@ -12,6 +12,7 @@ class Auth extends BaseController
     {
         $this->userModel = new UserModel();
         $this->session = session();
+        $this->session->keepFlashdata('error');
     }
     
     // Method register tries to create a new user account record in database
@@ -51,8 +52,8 @@ class Auth extends BaseController
 
         if(!isset($userData))
         {
-            echo 'Wrong username or email';
-            return;
+            $this->session->setFlashdata('error', 'Účet nenalezen');
+            return redirect()->to('/');
         }
 
         if (password_verify($password, $userData->heslo))
@@ -61,7 +62,8 @@ class Auth extends BaseController
             return redirect()->to('/');
         }else
         {
-            echo 'Wrong password';
+            $this->session->setFlashdata('error', 'Špatné heslo');
+            return redirect()->to('/');
         }
     }
 
