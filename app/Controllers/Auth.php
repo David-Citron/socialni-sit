@@ -146,6 +146,14 @@ class Auth extends BaseController
     function validateRegistration($data)
     {
         $data = (array)$data;
+        
+        // Username characters validation
+        $pattern = '/^[a-zA-Z0-9_\-]+$/';
+        
+        if (!preg_match($pattern, $data['uzivatelske_jmeno'])) {
+            $this->session->setFlashdata('error', 'Uživatelské jméno smí obsahovat pouze písmena bez diakritiky, čísla, podtržítka a pomlčky');
+            return false;
+        }
 
         // Unique username validation
         $existingAccount = $this->userModel->where('uzivatelske_jmeno', $data['uzivatelske_jmeno'])->first();
