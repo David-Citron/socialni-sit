@@ -1,13 +1,16 @@
 <?php
 
 namespace App\Controllers;
+use App\Models\UserModel;
 
 class Home extends BaseController
 {
     var $session;
+    var $userModel;
 
     public function __construct()
     {
+        $this->userModel = new UserModel();
         $this->session = session();
     }
     
@@ -38,8 +41,15 @@ class Home extends BaseController
         $data['error'] = $this->session->getFlashdata('error');
         return view('register.php', $data);
     }
+
     public function showMainPage()
     {
         return view('mainPage.php');
+    }
+
+    public function showProfile($username)
+    {
+        $data['user'] = $this->userModel->where('uzivatelske_jmeno', $username)->first();
+        return view('profile', $data);
     }
 }
