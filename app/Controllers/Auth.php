@@ -1,17 +1,20 @@
 <?php
 
 namespace App\Controllers;
+use App\Models\PostModel;
 use App\Models\UserModel;
 use DateTime;
 
 class Auth extends BaseController
 {
     var $userModel;
+    var $postModel;
     var $session;
     
     function __construct()
     {
         $this->userModel = new UserModel();
+        $this->postModel = new PostModel();
         $this->session = session();
         $this->session->keepFlashdata('error');
     }
