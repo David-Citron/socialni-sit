@@ -23,6 +23,6 @@ $routes->post('register', 'Auth::register');
 $routes->post('login', 'Auth::login');
 $routes->group('post', ['filter' => 'auth'], static function ($routes) {
     $routes->put('create', 'Post::create');
-    $routes->post('edit', 'Post::edit');
-    $routes->delete('(:num)', 'Post::delete/$1');
+    $routes->post('edit/(:num)', 'Post::edit/$1');
+    $routes->delete('delete/(:num)', 'Post::delete/$1');
 });
