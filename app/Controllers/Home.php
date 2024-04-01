@@ -1,16 +1,19 @@
 <?php
 
 namespace App\Controllers;
+use App\Models\PostModel;
 use App\Models\UserModel;
 
 class Home extends BaseController
 {
     var $session;
+    var $postModel;
     var $userModel;
 
     public function __construct()
     {
         $this->userModel = new UserModel();
+        $this->postModel = new PostModel();
         $this->session = session();
     }
     
