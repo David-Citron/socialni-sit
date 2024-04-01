@@ -52,4 +52,14 @@ class Home extends BaseController
         $data['user'] = $this->userModel->where('uzivatelske_jmeno', $username)->first();
         return view('profile', $data);
     }
+
+    public function showPostCreateForm()
+    {
+        return view('createPost.php');
+    }
+
+    public function showPostEditForm()
+    {
+        return view('editPost.php');
+    }
 }
