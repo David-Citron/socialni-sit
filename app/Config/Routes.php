@@ -13,7 +13,7 @@ $routes->get('register', 'Home::showSignUpForm');
 $routes->get('user/(:any)', 'Home::showProfile/$1', ['filter' => 'auth']);
 $routes->group('post', ['filter' => 'auth'], static function ($routes) {
     $routes->get('create', 'Home::showPostCreateForm');
-    $routes->get('edit', 'Home::showPostEditForm');
+    $routes->get('edit/(:num)', 'Home::showPostEditForm/$1');
 });
 $routes->get('accounts', 'Home::showAccounts', ['filter' => ['auth', 'admin']]);
 
