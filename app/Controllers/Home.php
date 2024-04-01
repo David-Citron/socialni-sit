@@ -58,7 +58,7 @@ class Home extends BaseController
         return view('createPost.php');
     }
 
-    public function showPostEditForm()
+    public function showPostEditForm($id)
     {
         return view('editPost.php');
     }
