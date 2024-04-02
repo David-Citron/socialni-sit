@@ -63,6 +63,7 @@ class Home extends BaseController
 
     public function showPostEditForm($id)
     {
-        return view('editPost.php');
+        $data['post'] = $this->postModel->find($id);
+        return view('editPost.php', $data);
     }
 }
