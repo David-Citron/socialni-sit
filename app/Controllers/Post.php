@@ -26,6 +26,8 @@ class Post extends BaseController
 
     public function delete($id)
     {
+        if($this->find($id) != null)
+        $this->postModel->delete($id);
         return;
     }
 }
