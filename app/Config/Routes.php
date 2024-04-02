@@ -18,7 +18,7 @@ $routes->group('post', ['filter' => 'auth'], static function ($routes) {
 $routes->get('accounts', 'Home::showAccounts', ['filter' => ['auth', 'admin']]);
 
 // Routes for server side
-$routes->get('logout', 'Auth::logOut');
+$routes->get('logout', 'Auth::logOut', ['filter' => 'auth']);
 $routes->post('register', 'Auth::register');
 $routes->post('login', 'Auth::login');
 $routes->group('post', ['filter' => 'auth'], static function ($routes) {
