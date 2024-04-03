@@ -48,7 +48,7 @@
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Při odesílání formuláře se vyskytla chyba.</h4>
+                <h4 class="modal-title">Při odesílání formuláře se vyskytla chyba</h4>
             </div>
 
             <!-- Modal body -->
