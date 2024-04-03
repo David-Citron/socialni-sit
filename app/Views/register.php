@@ -66,9 +66,9 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            <?php if (!empty($error)): ?> <!-- Check if $error is not empty -->
+            <?php if (!empty($error)): ?>
                 var myModal = new bootstrap.Modal(document.getElementById('myModal'));
-                myModal.show(); // Show the modal
+                myModal.show();
             <?php endif; ?>
         });
     </script>
