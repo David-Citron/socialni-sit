@@ -41,6 +41,31 @@
             </div>
         </center>
     </main>
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Při odesílání formuláře se vyskytla chyba.</h4>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <?php echo $error; ?>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div>
+
+            </div>
+        </div>
+    </div>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+    Open modal
+  </button>
 </body>
 
 </html>
