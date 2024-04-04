@@ -77,6 +77,39 @@ class Auth extends BaseController
         }
     }
 
+    // This method serves for changing password for logged in user
+    // It is optimized for receiving PUT data
+    function changePassword()
+    {
+        $currentPassword = $this->request->getVar('passwordCurrent');
+        $newPassword1 = $this->request->getVar('passwordNew1');
+        $newPassword2 = $this->request->getVar('passwordNew2');
+        
+        $currentAccount = $this->userModel->where($this->session->get('username'))->first();
+        if(!isset($currentAccount))
+        {
+            // Not logged in
+            return;
+        }
+
+        if(!password_verify($currentPassword, $currentAccount->heslo))
+        {
+            // Current password isn't matching with logged account
+            return;
+        }
+
+        if(strcmp($newPassword1, $newPassword2) != 0)
+        {
+            // Passwords not matching
+            return;
+        }
+
+        $currentAccount = (array)$currentAccount;
+        $currentAccount['heslo'] = password_hash($newPassword1, PASSWORD_DEFAULT);
+        $this->userModel->save($currentAccount);
+        return redirect()->to('/');
+    }
+
     // This method is primary made for AuthFilter
     // It returns true if user is logged in
     // When this method returns false it means user is not logged in
