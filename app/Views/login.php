@@ -55,9 +55,14 @@
             </div>
         </div>
     </div>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-    Open modal
-    </button>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            <?php if (!empty($error)): ?>
+                var myModal = new bootstrap.Modal(document.getElementById('myModal'));
+                myModal.show();
+            <?php endif; ?>
+        });
+    </script>
 </body>
 
 </html>
