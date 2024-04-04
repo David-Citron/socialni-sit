@@ -195,9 +195,8 @@ class Auth extends BaseController
 
     // This method takes array of data and removes unnecesary content
     // Returns array of data ready for database insertion
-    function refactorRegistrationData($data)
+    function refactorRegistrationData(array $data)
     {
-        $data = (array)$data;
         $newUser = [
             'uzivatelske_jmeno' => $data['uzivatelske_jmeno'],
             'heslo' => password_hash($data['heslo'], PASSWORD_DEFAULT),
