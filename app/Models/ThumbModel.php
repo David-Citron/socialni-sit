@@ -4,11 +4,11 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class ContributionFotoModel extends Model
+class ThumbModel extends Model
 {
-    protected $table = 'fotka_prispevek';
+    protected $table = 'palec';
     protected $primaryKey = 'id';
     protected $useAutoIncrement = true;
     protected $returnType = 'object';
-    protected $allowedFields =  ['nazev', 'alt_popis', 'prispevek_id'];
+    protected $allowedFields =  ['typ', 'uzivatel_id', 'prispevek_id'];
 }
