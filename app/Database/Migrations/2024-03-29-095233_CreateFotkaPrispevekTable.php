@@ -19,6 +19,10 @@ class CreateFotkaPrispevekTable extends Migration
                 'type' => 'VARCHAR',
                 'constraint' => 255,
             ],
+            'alt_popis' => [
+                'type' => 'VARCHAR',
+                'constraint' => 255,
+            ],
             'prispevek_id' => [
                 'type' => 'INT',
                 'constraint' => 11,

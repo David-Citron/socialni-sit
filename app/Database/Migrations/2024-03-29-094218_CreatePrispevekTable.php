@@ -15,17 +15,13 @@ class CreatePrispevekTable extends Migration
                 'unsigned' => true,
                 'auto_increment' => true,
             ],
-            'text' => [
+            'nazev' => [
                 'type' => 'VARCHAR',
                 'constraint' => 255,
             ],
-            'pocet_lajku' => [
-                'type' => 'INT',
-                'constraint' => 11,
-            ],
-            'pocet_komentaru' => [
-                'type' => 'INT',
-                'constraint' => 11,
+            'text' => [
+                'type' => 'VARCHAR',
+                'constraint' => 255,
             ],
             'pridano' => [
                 'type' => 'DATETIME',
