@@ -11,3 +11,5 @@ Odkaz na grafický návrh: https://xd.adobe.com/view/973f6048-e9e9-4e28-a284-8ff
 
 ## ER digram ver. 02
 ![alt text](image-1.png)
+## ER diagram ver. 03
+![alt text](image-2.png)
