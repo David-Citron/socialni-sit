@@ -10,6 +10,7 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('/', 'Home::showMainPage', ['filter' => 'auth']);
 $routes->get('login', 'Home::showSignInForm');
 $routes->get('register', 'Home::showSignUpForm');
+$routes->get('post', 'Home::showPostCreateForm');
 $routes->get('user/(:any)', 'Home::showProfile/$1', ['filter' => 'auth']);
 $routes->group('post', ['filter' => 'auth'], static function ($routes) {
     $routes->get('create', 'Home::showPostCreateForm');
