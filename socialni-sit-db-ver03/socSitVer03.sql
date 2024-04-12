@@ -36,8 +36,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `mydb`.`prispevek`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`prispevek` (
-  `id` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS `freedb_Soc-sit-projekt`.`prispevek` (
+  `id` INT NOT NULL AUTO_INCREMENT,
   `nazev` VARCHAR(255) NULL,
   `text` VARCHAR(255) NULL,
   `pridano` DATETIME NOT NULL,
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`prispevek` (
   INDEX `fk_prispevek_uzivatel_idx` (`uzivatel_id` ASC),
   CONSTRAINT `fk_prispevek_uzivatel`
     FOREIGN KEY (`uzivatel_id`)
-    REFERENCES `mydb`.`uzivatel` (`id`)
+    REFERENCES `freedb_Soc-sit-projekt`.`uzivatel` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -55,7 +55,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `mydb`.`komentar`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`komentar` (
+CREATE TABLE IF NOT EXISTS `freedb_Soc-sit-projekt`.`komentar` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `text` VARCHAR(255) NOT NULL,
   `pridano` DATETIME NOT NULL,
@@ -66,12 +66,12 @@ CREATE TABLE IF NOT EXISTS `mydb`.`komentar` (
   INDEX `fk_komentar_uzivatel1_idx` (`uzivatel_id` ASC),
   CONSTRAINT `fk_komentar_prispevek1`
     FOREIGN KEY (`prispevek_id`)
-    REFERENCES `mydb`.`prispevek` (`id`)
+    REFERENCES `freedb_Soc-sit-projekt`.`prispevek` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_komentar_uzivatel1`
     FOREIGN KEY (`uzivatel_id`)
-    REFERENCES `mydb`.`uzivatel` (`id`)
+    REFERENCES `freedb_Soc-sit-projekt`.`uzivatel` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -80,7 +80,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `mydb`.`fotka_prispevek`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`fotka_prispevek` (
+CREATE TABLE IF NOT EXISTS `freedb_Soc-sit-projekt`.`fotka_prispevek` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nazev` VARCHAR(255) NOT NULL,
   `alt_popis` VARCHAR(255) NULL,
@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`fotka_prispevek` (
   INDEX `fk_fotka_prispevek_prispevek1_idx` (`prispevek_id` ASC),
   CONSTRAINT `fk_fotka_prispevek_prispevek1`
     FOREIGN KEY (`prispevek_id`)
-    REFERENCES `mydb`.`prispevek` (`id`)
+    REFERENCES `freedb_Soc-sit-projekt`.`prispevek` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -98,7 +98,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `mydb`.`palec`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`palec` (
+CREATE TABLE IF NOT EXISTS `freedb_Soc-sit-projekt`.`palec` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `typ` INT NOT NULL,
   `uzivatel_id` INT NOT NULL,
@@ -108,12 +108,12 @@ CREATE TABLE IF NOT EXISTS `mydb`.`palec` (
   INDEX `fk_palec_prispevek1_idx` (`prispevek_id` ASC) ,
   CONSTRAINT `fk_palec_uzivatel1`
     FOREIGN KEY (`uzivatel_id`)
-    REFERENCES `mydb`.`uzivatel` (`id`)
+    REFERENCES `freedb_Soc-sit-projekt`.`uzivatel` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_palec_prispevek1`
     FOREIGN KEY (`prispevek_id`)
-    REFERENCES `mydb`.`prispevek` (`id`)
+    REFERENCES `freedb_Soc-sit-projekt`.`prispevek` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
