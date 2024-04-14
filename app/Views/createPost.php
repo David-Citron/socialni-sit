@@ -14,63 +14,76 @@
         height: 100vh;
         margin: 0;
     }
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        max-width: 800px;
+        width: 100%;
+        padding: 0 20px;
+    }
     .card {
-        width: 300px;
+        width: calc(50% - 20px);
         border: 1px solid #ccc;
         padding: 20px;
         text-align: center;
+        margin: 10px;
     }
-    #dropArea {
+    #dropArea, #textInput {
         border: 2px dashed #ccc;
         padding: 20px;
         margin-bottom: 20px;
+        width: 100%;
+        cursor: pointer;
+    }
+    #imageInput, #textInput {
+        width: 100%;
     }
     img {
         max-width: 100%;
         height: auto;
         margin-bottom: 10px;
     }
+
+    @media (max-width: 768px) {
+        .card {
+            width: calc(100% - 20px);
+        }
+    }
 </style>
 </head>
 <body>
 
-<div class="card" id="dropArea" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);">
-    <input type="file" accept="image/*" id="imageInput" name="imageInput" style="display: none;" onchange="fileSelected()">
-    <button type="button" onclick="document.getElementById('imageInput').click()">Vybrat soubor</button>
-    <br>
-    <img src="" id="preview" alt="Náhled obrázku">
+<div class="container">
+    <div class="card">
+        <label for="imageInput" id="dropArea">
+            <input type="file" accept="image/*" id="imageInput" name="imageInput">
+        </label>
+        <img src="" id="preview">
+    </div>
+
+    <div class="card">
+        <input type="text" id="textInput" name="textInput" placeholder="Textové pole">
+    </div>
 </div>
 
 <script>
-    function fileSelected() {
-        var fileInput = document.getElementById('imageInput').files[0];
-        previewFile(fileInput);
+document.getElementById('imageInput').addEventListener('change', function(event) {
+    var file = event.target.files[0];
+    var preview = document.getElementById('preview');
+    var reader = new FileReader();
+
+    reader.onloadend = function () {
+        preview.src = reader.result;
     }
 
-    function dropHandler(event) {
-        event.preventDefault();
-        var file = event.dataTransfer.files[0];
-        previewFile(file);
+    if (file) {
+        reader.readAsDataURL(file);
+    } else {
+        preview.src = "";
     }
-
-    function dragOverHandler(event) {
-        event.preventDefault();
-    }
-
-    function previewFile(file) {
-        var preview = document.getElementById('preview');
-        var reader = new FileReader();
-
-        reader.onloadend = function () {
-            preview.src = reader.result;
-        }
-
-        if (file) {
-            reader.readAsDataURL(file);
-        } else {
-            preview.src = "";
-        }
-    }
+});
 </script>
 
 </body>
