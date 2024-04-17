@@ -16,6 +16,8 @@ $routes->group('post', ['filter' => 'auth'], static function ($routes) {
     $routes->get('create', 'Home::showPostCreateForm');
     $routes->get('edit/(:num)', 'Home::showPostEditForm/$1');
 });
+
+// Routes for administrator
 $routes->get('accounts', 'Home::showAccounts', ['filter' => ['auth', 'admin']]);
 
 // Routes for server side
