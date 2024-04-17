@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 use App\Models\PostModel;
+use App\Models\UserModel;
 
 class Post extends BaseController
 {
@@ -16,22 +17,53 @@ class Post extends BaseController
 
     public function create()
     {
-        return;
+        $name = $this->request->getVar('nazev');
+        $text = $this->request->getVar('text');
+        $picture = $this->request->getVar('obrazek');
+
+        $userModel = new UserModel();
+        $userID = $userModel->find($this->session->get('username'));
+        
+        $data = [
+            'nazev' => $name,
+            'text' => $text,
+            'picture' => $picture,
+            'uzivatel_id' => $userID
+        ];
+
+        $this->postModel->insert($data);
+
+        return redirect()->to('/');
     }
 
     public function edit($id)
     {
-        return;
+        $name = $this->request->getVar('nazev');
+        $text = $this->request->getVar('text');
+        $picture = $this->request->getVar('obrazek');
+
+        $currentPost = $this->postModel->find($id);
+        
+        $data = [
+            'nazev' => $name,
+            'text' => $text,
+            'picture' => $picture,
+            'id' => $currentPost['uzivatel_ID']
+        ];
+
+        $this->postModel->save($data);
+
+        return redirect()->to('/');
     }
 
     public function delete($id)
     {
         if(empty($this->postModel->find($id)))
         {
-            return;
+            return redirect()->to('/');
         }
         
         $this->postModel->delete($id);
-        return;
+        return redirect()->to('/');
     }
 }
