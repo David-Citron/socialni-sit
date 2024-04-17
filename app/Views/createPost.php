@@ -6,65 +6,27 @@
 <title>Nahrát obrázek</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="<?php echo base_url('assets/css/auth.css');?>">
-<style>
-    body {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-    }
-    .container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
-        max-width: 800px;
-        width: 100%;
-        padding: 0 20px;
-    }
-    .card {
-        width: calc(50% - 20px);
-        border: 1px solid #ccc;
-        padding: 20px;
-        text-align: center;
-        margin: 10px;
-    }
-    #dropArea, #textInput {
-        border: 2px dashed #ccc;
-        padding: 20px;
-        margin-bottom: 20px;
-        width: 100%;
-        cursor: pointer;
-    }
-    #imageInput, #textInput {
-        width: 100%;
-    }
-    img {
-        max-width: 100%;
-        height: auto;
-        margin-bottom: 10px;
-    }
-
-    @media (max-width: 768px) {
-        .card {
-            width: calc(100% - 20px);
-        }
-    }
-</style>
 </head>
 <body>
 
-<div class="container">
-    <div class="card">
-        <label for="imageInput" id="dropArea">
-            <input type="file" accept="image/*" id="imageInput" name="imageInput">
-        </label>
-        <img src="" id="preview">
-    </div>
+<h2 style="text-align: center; justify-content: center;">Nový příspěvek</h2>
 
-    <div class="card">
-        <input type="text" id="textInput" name="textInput" placeholder="Textové pole">
+<div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; align-items: stretch; max-width: 800px; width: 100%; padding: 0 20px;">
+        <div style="flex: 1; border: 1px solid #ccc; text-align: center; margin: 10px; position: relative">
+            <label for="imageInput" style="border: 2px dashed #ccc; margin-bottom: 20px; width: 100%; cursor: pointer;">
+                <input type="file" accept="image/*" id="imageInput" name="imageInput" style="width: 100%; min-width: 200px height: 100%; display: none;">
+                Přetáhnout obrázek sem
+            </label>
+            <img src="" id="preview" style="max-width: 100%; height: auto; margin-bottom: 10px;">
+            <div style="position: absolute; bottom: 0; display: flex; justify-content: center; width: 100%; margin-bottom: -30px">
+                <button style="height: 60px; width: 100px" class="btn btn-primary">Vložit</button>    
+            </div>
+        </div>
+
+        <div style="flex: 1; border: 1px solid #ccc; text-align: center; margin: 10px;">
+            <input type="text" id="textInput" name="textInput" placeholder="Zadejte text" style="width: 100%; min-width: 200px; height: 100%;">
+        </div>
     </div>
 </div>
 
