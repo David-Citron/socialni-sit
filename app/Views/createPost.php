@@ -29,6 +29,10 @@
         form{
             padding: 0;
         }
+
+        textarea{
+            resize:none;
+        }
     </style>
 </head>
 <body>
