@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cs">
 <head>
     <meta charset="UTF-8">
     <link rel="shortcut icon" type="x-icon" href="<?php echo base_url('assets/img/projekt_web.ico');?>">
