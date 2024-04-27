@@ -25,9 +25,14 @@
             margin-bottom: 10px;
             max-height: 100%; /* Přizpůsobíme výšku obrázku */
         }
+
+        form{
+            padding: 0;
+        }
     </style>
 </head>
 <body>
+    <form action="<?php echo base_url('post/create');?>" method="post" enctype="multipart/form-data">
     <div style="">
         <h2 style="text-align: center; justify-content: left;">Nový příspěvek</h2>
     </div>
@@ -36,7 +41,7 @@
             <div class="card">
                 <div>
                     <label for="imageInput" style="border: 2px dashed #ccc; margin-bottom: 20px; width: 100%; height:100%; cursor: pointer;">
-                        <input type="file" multiple required accept="image/*" id="imageInput" name="imageInput" style="width: 100%; min-width: 200px; height: 100%; display: none;">
+                        <input type="file" multiple required accept="image/*" id="imageInput" name="obrazky[]" style="width: 100%; min-width: 200px; height: 100%; display: none;">
                         Přetáhnout obrázek sem
                     </label>
                     <img src="" id="preview">
@@ -61,10 +66,16 @@
             </div>
 
             <div class="card">
-                <textarea id="textInput" name="textInput" placeholder="Zadejte text" style="width: 100%; min-width: 200px; height: 100%;"></textarea>
+                <input placeholder="Zadejte název příspěvku" type="text" name="nazev" required>
+                <textarea id="textInput" name="text" placeholder="Zadejte text" style="width: 100%; min-width: 200px; height: 100%;" required></textarea>
             </div>
         </div>
     </div>
+    <div>
+        <input type="submit" class="btn btn-success">
+    </div>
+
+    </form>
 
     <script>
     document.getElementById('imageInput').addEventListener('change', function(event) {
