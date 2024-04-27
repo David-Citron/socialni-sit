@@ -25,12 +25,12 @@ class Post extends BaseController
         $pictures = $this->request->getFiles()['obrazky'];
         
         $userModel = new UserModel();
-        $userID = $userModel->find($this->session->get('username'));
+        $userID = $userModel->where('uzivatelske_jmeno', $this->session->get('username'))->first();
         
         $data = [
             'nazev' => $name,
             'text' => $text,
-            'uzivatel_id' => $userID
+            'uzivatel_id' => $userID->id
         ];
 
         $this->postModel->insert($data);
@@ -43,7 +43,9 @@ class Post extends BaseController
                 'alt_popis' => null,
                 'prispevek_id' => $id
             ];
-            $this->fotoModel->insert();
+            $this->fotoModel->insert($pictureData);
+            $newFileName = 'foto'.$this->fotoModel->getInsertID().'.'.$picture->getExtension();
+            $picture->move(ROOTPATH.'assets/img/post', $newFileName);
         }
         
         return redirect()->to('/');
@@ -119,5 +121,14 @@ class Post extends BaseController
         
         $this->postModel->delete($id);
         return redirect()->to('/');
+    }
+
+    public function showAllPosts()
+    {
+        $posts = $this->postModel->findAll();
+        foreach($posts as $post)
+        {
+            echo 'Příspěvek č. '.$post->id.' - '.$post->nazev.'<br>';
+        }
     }
 }
