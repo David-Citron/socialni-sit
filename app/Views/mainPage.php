@@ -10,7 +10,7 @@
     <title>ArchShare - Příspěvky</title>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg bg-white navbar-white sticky-top" style="box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4)">
+    <nav id="navbar" class="navbar navbar-expand-lg bg-white navbar-white sticky-top" style="box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4)">
         <div class="container-fluid">
           <a class="navbar-brand" href="#">
             <img src="<?= base_url('assets/img/avatar.png')?>" alt="Avatar Logo" style="width: 60px;" class="rounded-pill"> 
@@ -32,7 +32,7 @@
                                 <img src="<?= base_url('assets/img/avatar.png')?>" alt="Avatar Logo" style="width:50px; height: auto;" class="rounded-pill">
                                 <h4 class="my-auto m-3">Uživatelské jméno</h4>
                             </div>
-                            <div class="dropdown"><a class="btn" data-bs-toggle="dropdown"><i class="fa-solid fa-ellipsis-vertical h2 my-auto" style="color: black;"></i></a>
+                            <div class="dropdown my-auto"><a class="btn" data-bs-toggle="dropdown"><i class="fa-solid fa-ellipsis-vertical h2 my-auto" style="color: black;"></i></a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="#">Upravit</a></li>
                                     <li><a class="dropdown-item" href="#">Smazat</a></li>
@@ -40,15 +40,52 @@
                             </div>
                         </div>
                         <div>
-                            <img src="<?= base_url('assets/img/prispevek.png')?>" class="card-img-top img-fluid" style="width: 100%" height="auto" alt="...">
+                            <!---
+                                Carousel pro příspěvky
+                            --!-->
+                            <div id="demo" class="carousel slide" data-bs-ride="carousel"> <!---Pro každý příspěvek se bude muset přidat jiné id, nejlépe id (příspěvku)--!-->
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <img src="<?= base_url('assets/img/post/prispevek01.jpg')?>" alt="" class="d-block w-100">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="<?= base_url('assets/img/post/prispevek09.jpg')?>" alt="" class="d-block w-100">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="<?= base_url('assets/img/post/prispevek20.jpg')?>" alt="" class="d-block w-100">
+                                    </div>
+                                </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon"></span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+                                <span class="carousel-control-next-icon"></span>
+                            </button>
+                            </div>
                         </div>
                         <div class="card-body" style="box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.1)">
-                          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                          <p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow:ellipsis;">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <div class="text-center">
+                                <!--- Modal pro zobrazení více k příspěvku-->
+                                <button type="button" style="border:none" class="bg-white color-black text-center" data-bs-toggle="modal" data-bs-target="#textCotribution1"><small>více</small>  <i class="fa-solid fa-angle-down"></i></button>
+                                <div class="modal" id="textCotribution1"> <!-- id = textContribution + id-příspěvku---> 
+                                    <div class="modal-dialog">
+                                        <div class="modal-content"> 
+                                            <div class="modal-header">
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            </div>   
+                                            <div class="modal-body text-start">
+                                                <p>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="d-flex justify-content-between p-2">
                             <div class="d-flex">
-                                <i class="fa-regular fa-thumbs-up h2"></i>
-                                <i style="margin-left: 20px;" class="fa-regular fa-thumbs-down h2"></i>
+                                <i class="fa-regular fa-thumbs-up h2 my-auto"></i>
+                                <i style="margin-left: 20px;" class="fa-regular fa-thumbs-down h2 my-auto"></i>
                             </div>
                             <div>
                                 <i class="fa-regular fa-message btn btn-lg" data-bs-toggle="modal" data-bs-target="#comments0"></i>
@@ -65,7 +102,7 @@
                                             <div class="col-12 col-lg-3">
                                                 <div class="d-flex">
                                                     <img src="<?= base_url('assets/img/avatar.png')?>" alt="Avatar Logo" style="width:50px; height: auto; " class=" rounded-pill">
-                                                    <p class="small my-auto" style="margin-left: 3px;">Uživatelské jméno</p>
+                                                    <p class="small my-auto" style="margin-left: 8px;">Uživatelské jméno</p>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-lg-9"><p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean id metus id velit ullamcorper pulvinar. Nulla pulvinar eleifend sem. Curabitur sagittis hendrerit ante. Suspendisse sagittis ultrices augue. Sed convallis magna eu sem. Maecenas libero. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Fusce aliquam vestibulum ipsum. Maecenas libero. Sed elit dui, pellentesque a, faucibus vel, interdum nec, diam. Etiam commodo dui eget wisi. Vivamus porttitor turpis ac leo. Phasellus enim erat, vestibulum vel, aliquam a, posuere eu, velit. Aliquam ante. Pellentesque arcu. Praesent dapibus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Pellentesque ipsum.</p></div>
@@ -104,8 +141,8 @@
                                 </div>
                             </div>
                             <div class="d-flex">
-                                    <p class="my-auto">131 210</p>
-                                    <i class="fa-regular fa-message my-auto" style="margin-left: 2px;"></i>
+                                    <p class="my-auto ">131 210</p>
+                                    <i class="fa-regular fa-message my-auto" style="margin-left: 7px;"></i>
                             </div>
                         </div>
                       </div>
@@ -119,7 +156,7 @@
                                 <img src="<?= base_url('assets/img/avatar.png')?>" alt="Avatar Logo" style="width:50px; height: auto;" class="rounded-pill">
                                 <h4 class="my-auto m-3">Uživatelské jméno</h4>
                             </div>
-                            <div class="dropdown"><a class="btn" data-bs-toggle="dropdown"><i class="fa-solid fa-ellipsis-vertical h2 my-auto" style="color: black;"></i></a>
+                            <div class="dropdown my-auto"><a class="btn" data-bs-toggle="dropdown"><i class="fa-solid fa-ellipsis-vertical h2 my-auto" style="color: black;"></i></a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="#">Upravit</a></li>
                                     <li><a class="dropdown-item" href="#">Smazat</a></li>
@@ -127,15 +164,52 @@
                             </div>
                         </div>
                         <div>
-                            <img src="<?= base_url('assets/img/prispevek.png')?>" class="card-img-top img-fluid" style="width: 100%" height="auto" alt="...">
+                            <!---
+                                Carousel pro příspěvky
+                            --!-->
+                            <div id="demo02" class="carousel slide" data-bs-ride="carousel"> <!---Pro každý příspěvek se bude muset přidat jiné id, nejlépe id (příspěvku)--!-->
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <img src="<?= base_url('assets/img/post/prispevek10.jpg')?>" alt="" class="d-block w-100">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="<?= base_url('assets/img/post/prispevek06.jpg')?>" alt="" class="d-block w-100">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img src="<?= base_url('assets/img/post/prispevek17.jpg')?>" alt="" class="d-block w-100">
+                                    </div>
+                                </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#demo02" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon"></span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#demo02" data-bs-slide="next">
+                                <span class="carousel-control-next-icon"></span>
+                            </button>
+                            </div>
                         </div>
                         <div class="card-body" style="box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.1)">
-                          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow:ellipsis;">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <div class="text-center">
+                                <!--- Modal pro zobrazení více k příspěvku-->
+                                <button type="button" style="border:none" class="bg-white color-black text-center" data-bs-toggle="modal" data-bs-target="#textCotribution2"><small>více</small>  <i class="fa-solid fa-angle-down"></i></button>
+                                <div class="modal" id="textCotribution2"> <!-- id = textContribution + id-příspěvku---> 
+                                    <div class="modal-dialog">
+                                        <div class="modal-content"> 
+                                            <div class="modal-header">
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            </div>   
+                                            <div class="modal-body text-start">
+                                                <p>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="d-flex justify-content-between p-2">
                             <div class="d-flex">
-                                <i class="fa-regular fa-thumbs-up h2"></i>
-                                <i style="margin-left: 20px;" class="fa-regular fa-thumbs-down h2"></i>
+                                <i class="fa-regular fa-thumbs-up h2 my-auto"></i>
+                                <i style="margin-left: 20px;" class="fa-regular fa-thumbs-down h2 my-auto"></i>
                             </div>
                             <div>
                                 <i class="fa-regular fa-message btn btn-lg" data-bs-toggle="modal" data-bs-target="#comments1"></i>
@@ -152,7 +226,7 @@
                                             <div class="col-12 col-lg-3">
                                                 <div class="d-flex">
                                                     <img src="<?= base_url('assets/img/avatar.png')?>" alt="Avatar Logo" style="width:50px; height: auto; " class=" rounded-pill">
-                                                    <p class="small my-auto" style="margin-left: 3px;">Uživatelské jméno</p>
+                                                    <p class="small my-auto" style="margin-left: 8px;">Uživatelské jméno</p>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-lg-9"><p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean id metus id velit ullamcorper pulvinar. Nulla pulvinar eleifend sem. Curabitur sagittis hendrerit ante. Suspendisse sagittis ultrices augue. Sed convallis magna eu sem. Maecenas libero. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Fusce aliquam vestibulum ipsum. Maecenas libero. Sed elit dui, pellentesque a, faucibus vel, interdum nec, diam. Etiam commodo dui eget wisi. Vivamus porttitor turpis ac leo. Phasellus enim erat, vestibulum vel, aliquam a, posuere eu, velit. Aliquam ante. Pellentesque arcu. Praesent dapibus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Pellentesque ipsum.</p></div>
@@ -192,7 +266,7 @@
                             </div>
                             <div class="d-flex">
                                     <p class="my-auto">131 210</p>
-                                    <i class="fa-regular fa-message my-auto" style="margin-left: 2px;"></i>
+                                    <i class="fa-regular fa-message my-auto" style="margin-left: 8px;"></i>
                             </div>
                         </div>
                       </div>
@@ -200,5 +274,17 @@
             </div>
         </div>
       </div>
+      <script>
+            var prevScrollpos = window.pageYOffset;
+            window.onscroll = function() {
+                var currentScrollPos = window.pageYOffset;
+                if (prevScrollpos > currentScrollPos) {
+                    document.getElementById("navbar").style.top = "0";
+                } else {
+                    document.getElementById("navbar").style.top = "-100px";
+                }
+                prevScrollpos = currentScrollPos;
+            }
+      </script>
 </body>
 </html>
