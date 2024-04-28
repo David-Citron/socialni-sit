@@ -1,90 +1,102 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cs">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nahrát obrázek</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
-<link rel="stylesheet" href="<?php echo base_url('assets/css/auth.css');?>">
-<style>
-    body {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-    }
-    .container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
-        max-width: 800px;
-        width: 100%;
-        padding: 0 20px;
-    }
-    .card {
-        width: calc(50% - 20px);
-        border: 1px solid #ccc;
-        padding: 20px;
-        text-align: center;
-        margin: 10px;
-    }
-    #dropArea, #textInput {
-        border: 2px dashed #ccc;
-        padding: 20px;
-        margin-bottom: 20px;
-        width: 100%;
-        cursor: pointer;
-    }
-    #imageInput, #textInput {
-        width: 100%;
-    }
-    img {
-        max-width: 100%;
-        height: auto;
-        margin-bottom: 10px;
-    }
-
-    @media (max-width: 768px) {
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" type="x-icon" href="<?php echo base_url('assets/img/projekt_web.ico');?>">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArchShare - Nový příspěvek</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/auth.css');?>">
+    <style>
         .card {
-            width: calc(100% - 20px);
+            flex: 1;
+            border: 1px solid #ccc;
+            text-align: center;
+            margin: 10px;
+            position: relative;
+            max-width: calc(50% - 20px); /* Maximální šířka karty */
+            width: 100%;
+            max-width: 1000px;
         }
-    }
-</style>
+
+        #preview {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+            max-height: 100%; /* Přizpůsobíme výšku obrázku */
+        }
+
+        form{
+            padding: 0;
+        }
+
+        textarea{
+            resize:none;
+        }
+    </style>
 </head>
 <body>
+    <form action="<?php echo base_url('post/create');?>" method="post" enctype="multipart/form-data">
+    <div style="">
+        <h2 style="text-align: center; justify-content: left;">Nový příspěvek</h2>
+    </div>
+    <div style="display: flex; justify-content: center; align-items: center; height: 90vh;">
+        <div style="display: flex; flex-wrap: wrap; max-width: 800px; width: 100%; min-width: 80%; height: 40%; padding: 0 20px">
+            <div class="card">
+                <div>
+                    <label for="imageInput" style="border: 2px dashed #ccc; margin-bottom: 20px; width: 100%; height:100%; cursor: pointer;">
+                        <input type="file" multiple required accept="image/*" id="imageInput" name="obrazky[]" style="width: 100%; min-width: 200px; height: 100%; display: none;">
+                        Přetáhnout obrázek sem
+                    </label>
+                    <img src="" id="preview">
+                </div>
+                <div style="display: flex; justify-content: center; align-items: center">
+                    <div class="card">
+                        <img src="" id="preview" width="25" height="25"> 
+                    </div>
+                    <div class="card">
+                        <img src="" id="preview" width="25" height="25"> 
+                    </div>
+                    <div class="card">
+                        <img src="" id="preview" width="25" height="25"> 
+                    </div>
+                    <div class="card">
+                        <img src="" id="preview" width="25" height="25"> 
+                    </div>
+                    <div class="card">
+                        <img src="" id="preview" width="25" height="25"> 
+                    </div>
+                </div>
+            </div>
 
-<div class="container">
-    <div class="card">
-        <label for="imageInput" id="dropArea">
-            <input type="file" accept="image/*" id="imageInput" name="imageInput">
-        </label>
-        <img src="" id="preview">
+            <div class="card">
+                <input placeholder="Zadejte název příspěvku" type="text" name="nazev" required>
+                <textarea id="textInput" name="text" placeholder="Zadejte text" style="width: 100%; min-width: 200px; height: 100%;" required></textarea>
+            </div>
+        </div>
+    </div>
+    <div>
+        <input type="submit" class="btn btn-success">
     </div>
 
-    <div class="card">
-        <input type="text" id="textInput" name="textInput" placeholder="Textové pole">
-    </div>
-</div>
+    </form>
 
-<script>
-document.getElementById('imageInput').addEventListener('change', function(event) {
-    var file = event.target.files[0];
-    var preview = document.getElementById('preview');
-    var reader = new FileReader();
+    <script>
+    document.getElementById('imageInput').addEventListener('change', function(event) {
+        var file = event.target.files[0];
+        var preview = document.getElementById('preview');
+        var reader = new FileReader();
 
-    reader.onloadend = function () {
-        preview.src = reader.result;
-    }
+        reader.onloadend = function () {
+            preview.src = reader.result;
+        }
 
-    if (file) {
-        reader.readAsDataURL(file);
-    } else {
-        preview.src = "";
-    }
-});
-</script>
-
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+            preview.src = "";
+        }
+    });
+    </script>
 </body>
 </html>
