@@ -1,21 +1,33 @@
 <?php
 
 namespace App\Controllers;
+use CodeIgniter\API\ResponseTrait;
 use App\Models\PostModel;
 use App\Models\UserModel;
 use App\Models\FotoModel;
+use App\Models\ThumbModel;
+use App\Models\CommentModel;
 
 class Post extends BaseController
 {
+    use ResponseTrait;
+
     var $postModel;
     var $fotoModel;
+    var $commentModel;
+    var $userModel;
     var $session;
+    var $defaultProfilePicture;
+    
 
     public function __construct()
     {
         $this->postModel = new PostModel();
         $this->fotoModel = new FotoModel();
+        $this->commentModel = new CommentModel();
+        $this->userModel = new UserModel();
         $this->session = session();
+        $this->defaultProfilePicture = 'avatar.png';
     }
 
     public function create()
@@ -24,8 +36,7 @@ class Post extends BaseController
         $text = $this->request->getVar('text');
         $pictures = $this->request->getFiles()['obrazky'];
         
-        $userModel = new UserModel();
-        $userID = $userModel->where('uzivatelske_jmeno', $this->session->get('username'))->first();
+        $userID = $this->userModel->where('uzivatelske_jmeno', $this->session->get('username'))->first();
         
         $data = [
             'nazev' => $name,
@@ -38,13 +49,13 @@ class Post extends BaseController
 
         foreach($pictures as $picture)
         {
+            $newFileName = 'foto'.($this->fotoModel->orderBy('id', 'desc')->first()->id + 1).'.'.$picture->getExtension();
             $pictureData = [
-                'nazev' => $picture->getName(),
+                'nazev' => $newFileName,
                 'alt_popis' => null,
                 'prispevek_id' => $id
             ];
             $this->fotoModel->insert($pictureData);
-            $newFileName = 'foto'.$this->fotoModel->getInsertID().'.'.$picture->getExtension();
             $picture->move(ROOTPATH.'assets/img/post', $newFileName);
         }
         
@@ -130,5 +141,106 @@ class Post extends BaseController
         {
             echo 'Příspěvek č. '.$post->id.' - '.$post->nazev.'<br>';
         }
+    }
+
+    public function apiShowPost()
+    {
+        $id = $this->request->getVar('id');
+        return $this->respond(['post' => $this->retrievePost($id), 'message' => 'Příspěvek nalezen', 'status' => 200]);
+    }
+
+    public function apiShowNextPost()
+    {
+        return $this->apiShowNextPostMultiple(1);
+    }
+
+    public function apiShowNextPostMultiple($count)
+    {
+        $requestedId = $this->request->getVar('id');
+        $allPosts = $this->postModel->orderBy('id', 'desc')->findAll();
+        $next = 0;
+        if ($requestedId == 0){
+            $next = $count;
+        }
+        $ids = [];
+        foreach($allPosts as $post)
+        {
+            if ($post->id == $requestedId)
+            {
+                $next = $count;
+            }else if($next > 0)
+            {
+                $next = $next -1;
+                $ids[] = $post->id;
+            }
+        }
+        $posts = [];
+        foreach ($ids as $key => $id)
+        {
+            $posts[$key] = $this->retrievePost($id);
+        }
+        return $this->respond(['posts' => $posts, 'message' => 'Příspěvky nalezeny', 'status' => 200]);
+    }
+
+    public function retrievePost($id)
+    {
+        $post = (array) $this->postModel->find($id);
+        $user = (array) $this->userModel->find($post['uzivatel_id']);
+        $post['uzivatel_jmeno'] = $user['uzivatelske_jmeno'];
+        $post['uzivatel_foto'] = $user['obrazek'];
+        $thumbModel = new ThumbModel();
+        $post['thumbs_up'] = $thumbModel->where('prispevek_id', $post['id'])->where('typ', 1)->countAllResults();
+        $post['thumbs_down'] = $thumbModel->where('prispevek_id', $post['id'])->where('typ', 2)->countAllResults();
+        $post['comments'] = (array) $this->commentModel->where('prispevek_id', $post['id'])->findAll();
+        foreach ($post['comments'] as $key => $comment)
+        {
+            $comment = (array) $comment;
+            $commentUser = $this->userModel->find($comment['uzivatel_id']);
+            $post['comments'][$key]->uzivatel_jmeno = $commentUser->uzivatelske_jmeno;
+            $post['comments'][$key]->uzivatel_foto = $this->userModel->find($comment['uzivatel_id'])->obrazek;
+            if($post['comments'][$key]->uzivatel_foto == null)
+            {
+                $post['comments'][$key]->uzivatel_foto = $this->defaultProfilePicture;
+            }
+            $post['comments'][$key]->uzivatel_foto = base_url('assets/img/user/'.$post['comments'][$key]->uzivatel_foto);
+        }
+        $post['comments_count'] = count($post['comments']);
+        $allFoto = $this->fotoModel->where('prispevek_id', $post['id'])->findAll();
+        $fotoURLs = null;
+        foreach($allFoto as $key => $foto)
+        {
+            $fotoURLs[$key] = base_url('assets/img/post/'.$foto->nazev);
+        }
+        $post['foto'] = $fotoURLs;
+        $post['dropdown'] = $this->session->get('admin');
+        if($this->session->get('username') == $post['uzivatel_jmeno'])
+        {
+            $post['dropdown'] = true;
+        }
+        if($post['uzivatel_foto'] == null)
+        {
+            $post['uzivatel_foto'] = $this->defaultProfilePicture;
+        }
+        $post['uzivatel_foto'] = base_url('assets/img/user/'.$post['uzivatel_foto']);
+        return $post;
+    }
+
+    public function addComment()
+    {
+        $data['text'] = $this->request->getVar('text');
+        $data['prispevek_id'] = $this->request->getVar('prispevek_id');
+        $data['uzivatel_id'] = $this->userModel->where('uzivatelske_jmeno', $this->session->get('username'))->first()->id;
+        $data['pridano'] = date('Y-m-d H:i:s');
+        $this->commentModel->insert($data);
+        $comment = (array) $this->commentModel->find($this->commentModel->getInsertID());
+        $commentUser = $this->userModel->find($data['uzivatel_id']);
+        $comment['uzivatel_jmeno'] = $commentUser->uzivatelske_jmeno;
+        $comment['uzivatel_foto'] = $this->userModel->find($data['uzivatel_id'])->obrazek;
+        if($comment['uzivatel_foto'] == null)
+        {
+            $comment['uzivatel_foto'] = $this->defaultProfilePicture;
+        }
+        $comment['uzivatel_foto'] = base_url('assets/img/user/'.$comment['uzivatel_foto']);
+        return $this->respond(['comment' => $comment, 'message' => 'Komentář byl úspěšně přidán', 'status' => 201]);
     }
 }

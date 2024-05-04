@@ -29,3 +29,9 @@ $routes->group('post', ['filter' => 'auth'], static function ($routes) {
     $routes->post('edit/(:num)', 'Post::edit/$1');
     $routes->delete('delete/(:num)', 'Post::delete/$1');
 });
+$routes->group('api', static function ($routes) {
+    $routes->post('post', 'Post::apiShowPost');
+    $routes->post('post/next', 'Post::apiShowNextPost');
+    $routes->post('post/next/(:num)', 'Post::apiShowNextPostMultiple/$1');
+    $routes->post('comment/add', 'Post::addComment');
+});
