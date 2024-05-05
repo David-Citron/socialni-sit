@@ -243,13 +243,19 @@
                         var comments = '';
                         if(nextPost['comments'] != null){
                             for (i=0; i< nextPost['comments'].length; i++){
-                                comments = comments + '<div class="col-12 col-lg-3 mb-2"><div class="d-flex"><img src="'+nextPost['comments'][i]['uzivatel_foto']+'" alt="Avatar Logo" style="width:50px; height: auto; " class=" rounded-pill"><p class="small my-auto" style="margin-left: 8px;">'+nextPost['comments'][i]['uzivatel_jmeno']+'</p></div></div><div class="col-12 col-lg-9';
+                                comments = comments + '<div class="col-12 col-lg-3 mb-2" id="commenterHolding'+nextPost['id']+'"><div class="d-flex"><img src="'+nextPost['comments'][i]['uzivatel_foto']+'" alt="Avatar Logo" style="width:50px; height: auto; " class=" rounded-pill"><p class="small my-auto" style="margin-left: 8px;">'+nextPost['comments'][i]['uzivatel_jmeno']+'</p></div></div><div class="col-12 col-lg-9';
                                 if(i != nextPost['comments'].length - 1){
                                     comments = comments + ' mb-4';
+                                }else{
+                                    comments = comments + ' mb-0';
                                 }
-                                comments = comments + '"><p'
+                                comments = comments + '" ';
                                 if(i == nextPost['comments'].length - 1){
-                                    comments = comments + ' class="m-0"';
+                                    comments = comments + ' id="commentHolding'+nextPost['id']+'"';
+                                }
+                                comments = comments + '><p ';
+                                if(i == nextPost['comments'].length - 1){
+                                    comments = comments + 'class="mb-0" id="commentParagraph'+nextPost['id']+'"';
                                 }
                                 comments = comments + '>' +nextPost['comments'][i]['text']+'</p></div>';
                             }
@@ -302,8 +308,20 @@
                 .then(data => {
                     console.log(data);
                     var commentsDiv = document.getElementById('commentsDiv' + id);
+                    var element = document.getElementById('commentHolding'+id);
+                    if (element) {
+                        console.log('Removed element 1');
+                        element.className = element.className.replace('mb-0', 'mb-4');
+                        element.removeAttribute('id');
+                    }
+                    var element2 = document.getElementById('commentParagraph'+id);
+                    if (element2) {
+                        console.log('Removed element 2');
+                        element2.className = element2.className.replace('mb-0', 'mb-2');
+                        element2.removeAttribute('id');
+                    }
                     var comment = data['comment'];
-                    commentsDiv.insertAdjacentHTML('beforeend', '<div class="col-12 col-lg-3"><div class="d-flex"><img src="'+comment['uzivatel_foto']+'" alt="Avatar Logo" style="width:50px; height: auto; " class=" rounded-pill"><p class="small my-auto" style="margin-left: 8px;">'+comment['uzivatel_jmeno']+'</p></div></div><div class="col-12 col-lg-9"><p>'+comment['text']+'</p></div>');
+                    commentsDiv.insertAdjacentHTML('beforeend', '<div class="col-12 col-lg-3 mb-2" id="commenterHolding'+id+'"><div class="d-flex"><img src="'+comment['uzivatel_foto']+'" alt="Avatar Logo" style="width:50px; height: auto; " class=" rounded-pill"><p class="small my-auto" style="margin-left: 8px;">'+comment['uzivatel_jmeno']+'</p></div></div><div class="col-12 col-lg-9 mb-0" id="commentHolding'+id+'"><p class="mb-0" id="commentParagraph'+id+'">'+comment['text']+'</p></div>');
                     document.getElementById('commentText' + id).value = '';
                     var commentCountString = document.getElementById('commentCount' + id).innerHTML;
                     var commentCount = parseInt(commentCountString);
