@@ -36,8 +36,25 @@
                             <div class="dropdown my-auto"><a class="btn" data-bs-toggle="dropdown"><i class="fa-solid fa-ellipsis-vertical h2 my-auto" style="color: black;"></i></a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="#">Upravit</a></li>
-                                    <li><a class="dropdown-item" href="#">Smazat</a></li>
+                                    <li><button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalDelete1">Smazat</button></li>
                                   </ul>
+                                  <!---Modal pro mazání karty---->
+                                <div class="modal" id="modalDelete1"> <!-----ID příspěvku + změna i v buttonu---->
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                 Opravdu si přejete příspěvek smazat?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Zrušit</button>
+                                                <button type="button" class="btn btn-success">Ano</button> <!----Dodělat smazaní--->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div>
@@ -161,8 +178,25 @@
                             <div class="dropdown my-auto"><a class="btn" data-bs-toggle="dropdown"><i class="fa-solid fa-ellipsis-vertical h2 my-auto" style="color: black;"></i></a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="#">Upravit</a></li>
-                                    <li><a class="dropdown-item" href="#">Smazat</a></li>
+                                    <li><button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalDelete1">Smazat</button></li>
                                   </ul>
+                                  <!---Modal pro mazání karty---->
+                                <div class="modal" id="modalDelete2"> <!-----ID příspěvku + změna i v buttonu---->
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                 Opravdu si přejete příspěvek smazat?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Zrušit</button>
+                                                <button type="button" class="btn btn-success">Ano</button> <!----Dodělat smazaní--->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div>
@@ -329,7 +363,7 @@
                         
                         nextPost = data['posts'][j];
                         currentId = nextPost['id'];
-                        var dropdownItem = '<div class="dropdown my-auto"><a class="btn" data-bs-toggle="dropdown"><i class="fa-solid fa-ellipsis-vertical h2 my-auto" style="color: black;"></i></a><ul class="dropdown-menu"><li><a class="dropdown-item" href="#">Upravit</a></li><li><a class="dropdown-item" href="#">Smazat</a></li></ul></div>';
+                        var dropdownItem = '<div class="dropdown my-auto"><a class="btn" data-bs-toggle="dropdown"><i class="fa-solid fa-ellipsis-vertical h2 my-auto" style="color: black;"></i></a><ul class="dropdown-menu"><li><a class="dropdown-item" href="#">Upravit</a></li><li><button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalDelete'+nextPost['id']+'">Smazat</button></li></ul><!---Modal pro mazání karty----><div class="modal" id="modalDelete'+nextPost['id']+'"> <!-----ID příspěvku + změna i v buttonu----><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body">Opravdu si přejete příspěvek smazat?</div><div class="modal-footer"><button type="button" class="btn btn-danger" data-bs-dismiss="modal">Zrušit</button><button type="button" class="btn btn-success">Ano</button> <!----Dodělat smazaní---></div></div></div></div></div>';
 
                         if(nextPost['dropdown'] == false){
                             dropdownItem = '';
