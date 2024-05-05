@@ -129,7 +129,21 @@ class Post extends BaseController
         {
             return redirect()->to('/');
         }
-        
+        $fotos = $this->fotoModel->where('prispevek_id', $id)->findAll();
+        $fotoPath = ROOTPATH.'/assets/img/post/';
+        foreach($fotos as $fotoObj)
+        {
+            $foto = $fotoObj->nazev;
+            if (file_exists($fotoPath.$foto)) 
+            {
+                unlink($fotoPath.$foto);
+            }else
+            {
+                echo "Foto doesn't exist";
+                return;
+            }
+        }
+
         $this->postModel->delete($id);
         return redirect()->to('/');
     }
