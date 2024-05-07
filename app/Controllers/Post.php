@@ -7,6 +7,7 @@ use App\Models\UserModel;
 use App\Models\FotoModel;
 use App\Models\ThumbModel;
 use App\Models\CommentModel;
+use PHPUnit\Framework\Constraint\IsEmpty;
 
 class Post extends BaseController
 {
@@ -16,6 +17,7 @@ class Post extends BaseController
     var $fotoModel;
     var $commentModel;
     var $userModel;
+    var $thumbModel;
     var $session;
     var $defaultProfilePicture;
     
@@ -26,6 +28,7 @@ class Post extends BaseController
         $this->fotoModel = new FotoModel();
         $this->commentModel = new CommentModel();
         $this->userModel = new UserModel();
+        $this->thumbModel = new ThumbModel();
         $this->session = session();
         $this->defaultProfilePicture = 'avatar.png';
     }
@@ -256,5 +259,41 @@ class Post extends BaseController
         }
         $comment['uzivatel_foto'] = base_url('assets/img/user/'.$comment['uzivatel_foto']);
         return $this->respond(['comment' => $comment, 'message' => 'Komentář byl úspěšně přidán', 'status' => 201]);
+    }
+
+    public function changeThumb($prispevekID, $userID, $thumbType)
+    {
+        $currentThumb = $this->thumbModel->where('uzivatel_id', $userID)->where('prispevek_id', $prispevekID)->first();
+        if(isset($currentThumb))
+        {
+            if($currentThumb->typ == $thumbType)
+            {
+                return null;
+            }else
+            {
+                $currentThumb = (array) $currentThumb;
+                $currentThumb['typ'] = $thumbType;
+                $this->thumbModel->save($currentThumb);
+                return $currentThumb;
+            }
+        }else
+        {
+            $newThumb = ['prispevek_id' => $prispevekID, 'uzivatel_id' => $userID, 'typ' => $thumbType];
+            $this->thumbModel->insert($newThumb);
+            return $newThumb;
+        }
+    }
+
+    public function addThumb()
+    {
+        $thumb['type'] = $this->request->getVar('type');
+        $thumb['user_ID'] = $this->userModel->where('uzivatelske_jmeno', $this->session->get('username'))->first()->id;
+        $thumb['post_ID'] = $this->request->getVar('post_ID');
+        $response = $this->changeThumb($thumb['post_ID'], $thumb['user_ID'], $thumb['type']);
+        if(!isset($response))
+        {
+            return $this->respond(['message' => 'Nenastala změna', 'status' => 200]);
+        }
+        return $this->respond(['message' => 'Palec změněn', 'status' => 200, 'thumb' => $response]);
     }
 }
