@@ -34,5 +34,5 @@ $routes->group('api', ['filter' => 'auth'], static function ($routes) {
     $routes->post('post/next', 'Post::apiShowNextPost');
     $routes->post('post/next/(:num)', 'Post::apiShowNextPostMultiple/$1');
     $routes->post('comment/add', 'Post::addComment');
-    $routes->post('thumb', 'Post::changeThumb');
+    $routes->post('thumb', 'Post::addThumb');
 });

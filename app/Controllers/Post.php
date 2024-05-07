@@ -286,10 +286,10 @@ class Post extends BaseController
 
     public function addThumb()
     {
-        $thumb['type'] = $this->request->getVar('type');
-        $thumb['user_ID'] = $this->userModel->where('uzivatelske_jmeno', $this->session->get('username'))->first()->id;
-        $thumb['post_ID'] = $this->request->getVar('post_ID');
-        $response = $this->changeThumb($thumb['post_ID'], $thumb['user_ID'], $thumb['type']);
+        $type = $this->request->getVar('type');
+        $user = $this->userModel->where('uzivatelske_jmeno', $this->session->get('username'))->first()->id;
+        $post = $this->request->getVar('post_ID');
+        $response = $this->changeThumb($post, $user, $type);
         if(!isset($response))
         {
             return $this->respond(['message' => 'Nenastala změna', 'status' => 200]);
