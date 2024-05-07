@@ -208,6 +208,12 @@ class Post extends BaseController
         $thumbModel = new ThumbModel();
         $post['thumbs_up'] = $thumbModel->where('prispevek_id', $post['id'])->where('typ', 1)->countAllResults();
         $post['thumbs_down'] = $thumbModel->where('prispevek_id', $post['id'])->where('typ', 2)->countAllResults();
+        $thumb = $this->thumbModel->where('prispevek_id', $id)->where('uzivatel_id', $this->userModel->where('uzivatelske_jmeno', $this->session->get('username'))->first()->id)->first();
+        if($thumb != null)
+        {
+            $thumb = $thumb->typ;
+        }
+        $post['thumb'] = $thumb;
         $post['comments'] = (array) $this->commentModel->where('prispevek_id', $post['id'])->findAll();
         foreach ($post['comments'] as $key => $comment)
         {
