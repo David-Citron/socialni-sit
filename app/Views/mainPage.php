@@ -8,6 +8,14 @@
     <script src="https://kit.fontawesome.com/5b42e6ef0e.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <title>ArchShare - Příspěvky</title>
+    <style>
+        .thumbActive{
+            color: blue;
+        }    
+        .thumbDisabled{
+            color: black;
+        }
+    </style>
 </head>
 <body class="pb-4">
     <nav id="navbar" class="navbar navbar-expand-lg bg-white navbar-white sticky-top" style="box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4)">
@@ -261,7 +269,7 @@
                             }
                         }
 
-                        cardHolder.insertAdjacentHTML('beforeend', '<div class="col-12 col-lg-6 offset-lg-3 mt-2" id="post'+nextPost['id']+'"><div class="container"><div class="card" style="width: 100%; border: none;"><div class="container d-flex justify-content-between p-2"><div class="d-flex"><img src="'+nextPost['uzivatel_foto']+'" alt="Avatar Logo" style="width:50px; height: auto;" class="rounded-pill"><h4 class="my-auto m-3">'+nextPost['uzivatel_jmeno']+'</h4></div>'+dropdownItem+'</div><div><!---Carousel pro příspěvky--!--><div id="carousel'+nextPost['id']+'" class="carousel slide" data-bs-ride="carousel"> <!---Pro každý příspěvek se bude muset přidat jiné id, nejlépe id (příspěvku)--!--><div class="carousel-inner">'+foto+'</div><button class="carousel-control-prev" type="button" data-bs-target="#carousel'+nextPost['id']+'" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button><button class="carousel-control-next" type="button" data-bs-target="#carousel'+nextPost['id']+'" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button></div></div><div class="card-body" style="box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.1)"><p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow:ellipsis;">'+nextPost['nazev']+'</p><div class="text-center"><!--- Modal pro zobrazení více k příspěvku--><button type="button" style="border:none" class="bg-white color-black text-center" data-bs-toggle="modal" data-bs-target="#textContributionID'+nextPost['id']+'"><small>více</small> <i class="fa-solid fa-angle-down"></i></button><div class="modal" id="textContributionID'+nextPost['id']+'"> <!-- id = textContribution + id-příspěvku---><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body text-start"><p>'+nextPost['text']+'</p></div></div></div></div></div></div><div class="d-flex justify-content-between p-2"><div class="d-flex"><button onclick="changeThumb('+nextPost['id']+', 1)"><i class="fa-regular fa-thumbs-up h2 my-auto"></i></button><i style="margin-left: 20px;" class="fa-regular fa-thumbs-down h2 my-auto"></i></div><div><i class="fa-regular fa-message btn btn-lg" data-bs-toggle="modal" data-bs-target="#comments'+nextPost['id']+'"></i></div><div class="modal fade" id="comments'+nextPost['id']+'"> <!-- ID bude vždy "comments + id-příspěvku" !--><div class="modal-dialog modal-xl"><div class="modal-content"><div class="modal-header"><h4 class="modal-title">Komentáře</h4><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="container-fluid row" id="commentsDiv'+nextPost['id']+'">'+comments+'</div></div><div class="container"><form action="#" id="addCommentForm'+nextPost['id']+'"><div class="form-floating"><textarea name="text" class="form-control" placeholder="Leave a comment here" id="commentText'+nextPost['id']+'" style="height: 100px; resize:none;"></textarea><label for="commentText">Komentář</label></div><input type="hidden" name="prispevek_id" id="commentPrispevekId'+nextPost['id']+'" value="'+nextPost['id']+'"><button class="btn btn-white shadow-lg my-3" onclick="return addComment('+nextPost['id']+')">Přidat</button></form></div></div></div></div></div><div class=" d-flex justify-content-between p-3" style="background-color: #F5F5F5; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3)"><div class="d-flex"><div class="d-flex my-auto"><i class="fa-regular fa-thumbs-up my-auto"></i><p class="my-auto" style="margin-left: 2px;">'+nextPost['thumbs_up']+'</p></div><div class="d-flex my-auto" style="margin-left: 20px;"><i class="fa-regular fa-thumbs-down my-auto"></i><p class="my-auto" style="margin-left: 2px;">'+nextPost['thumbs_down']+'</p></div></div><div class="d-flex"><p class="my-auto" id="commentCount'+nextPost['id']+'">'+nextPost['comments_count']+'</p><i class="fa-regular fa-message my-auto" style="margin-left: 7px;"></i></div></div></div></div></div>');
+                        cardHolder.insertAdjacentHTML('beforeend', '<div class="col-12 col-lg-6 offset-lg-3 mt-2" id="post'+nextPost['id']+'"><div class="container"><div class="card" style="width: 100%; border: none;"><div class="container d-flex justify-content-between p-2"><div class="d-flex"><img src="'+nextPost['uzivatel_foto']+'" alt="Avatar Logo" style="width:50px; height: auto;" class="rounded-pill"><h4 class="my-auto m-3">'+nextPost['uzivatel_jmeno']+'</h4></div>'+dropdownItem+'</div><div><!---Carousel pro příspěvky--!--><div id="carousel'+nextPost['id']+'" class="carousel slide" data-bs-ride="carousel"> <!---Pro každý příspěvek se bude muset přidat jiné id, nejlépe id (příspěvku)--!--><div class="carousel-inner">'+foto+'</div><button class="carousel-control-prev" type="button" data-bs-target="#carousel'+nextPost['id']+'" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button><button class="carousel-control-next" type="button" data-bs-target="#carousel'+nextPost['id']+'" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button></div></div><div class="card-body" style="box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.1)"><p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow:ellipsis;">'+nextPost['nazev']+'</p><div class="text-center"><!--- Modal pro zobrazení více k příspěvku--><button type="button" style="border:none" class="bg-white color-black text-center" data-bs-toggle="modal" data-bs-target="#textContributionID'+nextPost['id']+'"><small>více</small> <i class="fa-solid fa-angle-down"></i></button><div class="modal" id="textContributionID'+nextPost['id']+'"> <!-- id = textContribution + id-příspěvku---><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body text-start"><p>'+nextPost['text']+'</p></div></div></div></div></div></div><div class="d-flex justify-content-between p-2"><div class="d-flex"><button onclick="changeThumb('+nextPost['id']+', 1)"><i id="thumbsUpButton'+nextPost['id']+'" class="fa-regular fa-thumbs-up h2 my-auto"></i></button><button style="margin-left: 20px;" onclick="changeThumb('+nextPost['id']+', 2)"><i id="thumbsDownButton'+nextPost['id']+'" class="fa-regular fa-thumbs-down h2 my-auto"></i></button></div><div><i class="fa-regular fa-message btn btn-lg" data-bs-toggle="modal" data-bs-target="#comments'+nextPost['id']+'"></i></div><div class="modal fade" id="comments'+nextPost['id']+'"> <!-- ID bude vždy "comments + id-příspěvku" !--><div class="modal-dialog modal-xl"><div class="modal-content"><div class="modal-header"><h4 class="modal-title">Komentáře</h4><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="container-fluid row" id="commentsDiv'+nextPost['id']+'">'+comments+'</div></div><div class="container"><form action="#" id="addCommentForm'+nextPost['id']+'"><div class="form-floating"><textarea name="text" class="form-control" placeholder="Leave a comment here" id="commentText'+nextPost['id']+'" style="height: 100px; resize:none;"></textarea><label for="commentText">Komentář</label></div><input type="hidden" name="prispevek_id" id="commentPrispevekId'+nextPost['id']+'" value="'+nextPost['id']+'"><button class="btn btn-white shadow-lg my-3" onclick="return addComment('+nextPost['id']+')">Přidat</button></form></div></div></div></div></div><div class=" d-flex justify-content-between p-3" style="background-color: #F5F5F5; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3)"><div class="d-flex"><div class="d-flex my-auto"><i class="fa-regular fa-thumbs-up my-auto"></i><p class="my-auto" style="margin-left: 2px;" id="thumbsUp'+nextPost['id']+'">'+nextPost['thumbs_up']+'</p></div><div class="d-flex my-auto" style="margin-left: 20px;"><i class="fa-regular fa-thumbs-down my-auto"></i><p class="my-auto" style="margin-left: 2px;" id="thumbsDown'+nextPost['id']+'">'+nextPost['thumbs_down']+'</p></div></div><div class="d-flex"><p class="my-auto" id="commentCount'+nextPost['id']+'">'+nextPost['comments_count']+'</p><i class="fa-regular fa-message my-auto" style="margin-left: 7px;"></i></div></div></div></div></div>');
                     }
                     return;
                 })  
@@ -348,6 +356,34 @@
                 })
                 .then(data => {
                     console.log(data);
+                    var thumbsUpButton = document.getElementById('thumbsUpButton' + prispevek_ID);
+                    var thumbsDownButton = document.getElementById('thumbsDownButton' + prispevek_ID);
+                    
+                    var thumbsUpCount = document.getElementById('thumbsUp' + prispevek_ID);
+                    var thumbsDownCount = document.getElementById('thumbsDown' + prispevek_ID);
+                    
+                    thumbsUpCount.innerHTML = data['thumb']['thumbsUpCount'];
+                    thumbsDownCount.innerHTML = data['thumb']['thumbsDownCount'];
+
+                    if(data['message'] == "Palec odstraněn"){
+                        thumbsDownButton.classList.remove("thumbActive");
+                        thumbsDownButton.classList.add("thumbDisabled");
+                        thumbsUpButton.classList.remove("thumbActive");
+                        thumbsUpButton.classList.add("thumbDisabled");
+                        return;
+                    }
+                    
+                    if(type == 1){
+                        thumbsDownButton.classList.remove("thumbActive");
+                        thumbsDownButton.classList.add("thumbDisabled");
+                        thumbsUpButton.classList.remove("thumbDisabled");
+                        thumbsUpButton.classList.add("thumbActive");
+                    }else if(type == 2){
+                        thumbsUpButton.classList.remove("thumbActive");
+                        thumbsUpButton.classList.add("thumbDisabled");
+                        thumbsDownButton.classList.remove("thumbDisabled");
+                        thumbsDownButton.classList.add("thumbActive");
+                    }
                 })
             }
       </script>

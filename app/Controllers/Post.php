@@ -263,23 +263,31 @@ class Post extends BaseController
 
     public function changeThumb($prispevekID, $userID, $thumbType)
     {
-        $currentThumb = $this->thumbModel->where('uzivatel_id', $userID)->where('prispevek_id', $prispevekID)->first();
-        if(isset($currentThumb))
+        $currentThumb = (array) $this->thumbModel->where('uzivatel_id', $userID)->where('prispevek_id', $prispevekID)->first();
+        if($currentThumb != null)
         {
-            if($currentThumb->typ == $thumbType)
+            if($currentThumb['typ'] == $thumbType)
             {
-                return null;
+                $this->thumbModel->delete($currentThumb['id']);
+                $currentThumb['thumbsUpCount'] = $this->thumbModel->where('prispevek_id', $prispevekID)->where('typ', 1)->countAllResults();
+                $currentThumb['thumbsDownCount'] = $this->thumbModel->where('prispevek_id', $prispevekID)->where('typ', 2)->countAllResults();
+                $currentThumb['change'] = true;
+                return $currentThumb;
             }else
             {
                 $currentThumb = (array) $currentThumb;
                 $currentThumb['typ'] = $thumbType;
                 $this->thumbModel->save($currentThumb);
+                $currentThumb['thumbsUpCount'] = $this->thumbModel->where('prispevek_id', $prispevekID)->where('typ', 1)->countAllResults();
+                $currentThumb['thumbsDownCount'] = $this->thumbModel->where('prispevek_id', $prispevekID)->where('typ', 2)->countAllResults();
                 return $currentThumb;
             }
         }else
         {
             $newThumb = ['prispevek_id' => $prispevekID, 'uzivatel_id' => $userID, 'typ' => $thumbType];
             $this->thumbModel->insert($newThumb);
+            $newThumb['thumbsUpCount'] = $this->thumbModel->where('prispevek_id', $prispevekID)->where('typ', 1)->countAllResults();
+            $newThumb['thumbsDownCount'] = $this->thumbModel->where('prispevek_id', $prispevekID)->where('typ', 2)->countAllResults();
             return $newThumb;
         }
     }
@@ -290,9 +298,9 @@ class Post extends BaseController
         $user = $this->userModel->where('uzivatelske_jmeno', $this->session->get('username'))->first()->id;
         $post = $this->request->getVar('post_ID');
         $response = $this->changeThumb($post, $user, $type);
-        if(!isset($response))
+        if(isset($response['change']))
         {
-            return $this->respond(['message' => 'Nenastala změna', 'status' => 200]);
+            return $this->respond(['message' => 'Palec odstraněn', 'status' => 200, 'thumb' => $response]);
         }
         return $this->respond(['message' => 'Palec změněn', 'status' => 200, 'thumb' => $response]);
     }
