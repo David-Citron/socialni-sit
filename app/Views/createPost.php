@@ -86,7 +86,8 @@
         }
 
         .card-box {
-            min-width: 28rem;
+            width: 100%;
+            min-width: 400px;
             width: 100%;
             border: none;
             border-radius: 0;
@@ -109,8 +110,8 @@
 
 <body>
     <form action="<?php echo base_url('post/create'); ?>" method="post" enctype="multipart/form-data">
-        <div class="d-flex flex-column justify-content-center align-items-center" style="min-height: 100vh">
-            <div style="">
+        <div class="d-flex flex-column justify-content-center align-items-center" style="min-height: 100vh;">
+            <div class="pt-3">
                 <h2 style="text-align: center">Nový příspěvek</h2>
             </div>
             <div class="d-flex justify-content-center row m-2">
