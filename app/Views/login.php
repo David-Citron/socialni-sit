@@ -29,7 +29,7 @@
                 </form>
             </div>
             <div class="p-4">
-                <a class="auth-switch" href="<?php echo base_url('create');?>">Registrovat se</a>
+                <a class="auth-switch" href="<?php echo base_url('register');?>">Registrovat se</a>
             </div>
         </center>
     </main>
