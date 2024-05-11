@@ -20,9 +20,15 @@
 <body class="pb-4">
     <nav id="navbar" class="navbar navbar-expand-lg bg-white navbar-white sticky-top" style="box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4)">
         <div class="container-fluid">
-          <a class="navbar-brand" href="<?php echo base_url('user/'.$userID);?>">
-            <img src="<?= base_url('assets/img/user/avatar.png')?>" alt="Avatar Logo" style="width: 60px;" class="rounded-pill"> 
-          </a>
+            <div class="dropdown navbar-brand">
+                <button data-bs-toggle="dropdown" style="background-color: white; border:none;">
+                    <img src="<?= base_url('assets/img/user/avatar.png')?>" alt="Avatar Logo" style="width: 60px;" class="rounded-pill">
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="<?= base_url('user/'.$userID);?>">Profil</a></li>
+                    <li><a class="dropdown-item bg-danger text-white" href="<?= base_url('logout')?>">Odhlásit se</a></li>
+                </ul>
+            </div>
           <ul class="navbar-nav">
             <li class="nav-item">
               <a class="nav-link" href="<?php echo base_url('post/create');?>"><i class="fa-solid fa-plus h3 my-auto" style="color: black;"></i></a>
