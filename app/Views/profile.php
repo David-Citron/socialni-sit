@@ -10,18 +10,18 @@
     <title>Profil</title>
 </head>
 <body>
-    <div class="container-fluid" style="background-color: #BEBEBE; height:40vh">
+    <div class="container-fluid" style="background-color: #BEBEBE; min-height:40vh">
         <div class="d-flex justify-content-end">
         <a href="<?= base_url('/')?>"><i class="fa-solid fa-house h3 m-2 text-white" style="color: white;"></i></a>
         </div>
-        <div class="d-flex aling-items-center justify-content-start" style="height: 57%; display: flex; justify-content: start; align-items: center;">
+        <div class="d-flex aling-items-center justify-content-start" style="min-height: 20vh; display: flex; justify-content: start; align-items: center;">
             <div class=" d-block d-sm-flex" style="width: 100%;">
                 <a href="#" style="margin-left: 5%;"><img src="<?= base_url('assets/img/user/avatar.png')?>" style="width:80px;" class="rounded-pill" alt="user"></a>
                 <div class="my-auto text-white" style="margin-left: 3%;"><h3>Jméno a příjmení</h3></div>
             </div>
         </div>
         <div class="d-flex justify-content-end" style="margin-right: 20%;">
-            <a href="#"><button class="p-2" style="background-color: white; width: 160px; border:none; border-radius:30px; box-shadow: 0 3px 6px rgba(0, 0, 1, 0.8); ">Přidat</button></a>
+            <a href="#"><button class="p-2 m-3" style="background-color: white; width: 160px; border:none; border-radius:30px; box-shadow: 0 3px 6px rgba(0, 0, 1, 0.8); ">Přidat</button></a>
         </div>
     </div>
     <div class="container-fluid  mt-4">
