@@ -80,22 +80,8 @@
                             </div>
                         </div>
                         <div class="card-body" style="box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.1)">
-                          <p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow:ellipsis;">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <div class="text-center">
-                                <button type="button" style="border:none" class="bg-white color-black text-center" data-bs-toggle="modal" data-bs-target="#textCotribution1"><small>více</small>  <i class="fa-solid fa-angle-down"></i></button>
-                                <div class="modal" id="textCotribution1">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content"> 
-                                            <div class="modal-header">
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                            </div>   
-                                            <div class="modal-body text-start">
-                                                <p>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <h5>Název příspěvku</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                         </div>
                         <div class="d-flex justify-content-between p-2">
                             <div class="d-flex">
@@ -113,6 +99,15 @@
                                       <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                     </div>
                                     <div class="modal-body">
+                                        <div class="container bg-white">
+                                                <form action="" method="post">
+                                                    <div class="form-floating">
+                                                        <textarea name="comments" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px; resize:none;"></textarea>
+                                                        <label for="floatingTextarea2">Komentář</label>
+                                                    </div>
+                                                    <div class="d-flex justify-content-end"><button class="btn btn-white shadow-lg m-3" type="submit"> Přidat</button></div>
+                                                </form>
+                                        </div>
                                         <div class="container-fluid row">
                                             <div class="col-12 col-lg-3">
                                                 <div class="d-flex">
@@ -130,16 +125,6 @@
                                             <div class="col-12 col-lg-9"><p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean id metus id velit ullamcorper pulvinar. Nulla pulvinar eleifend sem. Curabitur sagittis hendrerit ante. Suspendisse sagittis ultrices augue. Sed convallis magna eu sem. Maecenas libero. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Fusce aliquam vestibulum ipsum. Maecenas libero. Sed elit dui, pellentesque a, faucibus vel, interdum nec, diam. Etiam commodo dui eget wisi. Vivamus porttitor turpis ac leo. Phasellus enim erat, vestibulum vel, aliquam a, posuere eu, velit. Aliquam ante. Pellentesque arcu. Praesent dapibus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Pellentesque ipsum.</p></div>
                                         </div>
                                     </div>
-                                    <div class="container">
-                                        <form action="" method="post">
-                                            <div class="form-floating">
-                                                <textarea name="comments" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px; resize:none;"></textarea>
-                                                <label for="floatingTextarea2">Komentář</label>
-                                              </div>
-                                              <button class="btn btn-white shadow-lg m-3" type="submit"> Přidat</button>
-                                        </form>
-                                    </div>
-                              
                                   </div>
                                 </div>
                               </div>
