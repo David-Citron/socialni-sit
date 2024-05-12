@@ -40,8 +40,8 @@
         <div class="row" id='cardContainer'>
             <!-- karta -->
 
-            <!--
-            <div class="col-12 col-lg-6 mt-2">
+            
+            <div class="col-12 col-lg-6 offset-lg-3 mt-2">
                 <div class="container">
                     <div class="card" style="width: 100%; border: none;">
                         <div class="container d-flex justify-content-between p-2">
@@ -94,22 +94,8 @@
                             </div>
                         </div>
                         <div class="card-body" style="box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.1)">
-                          <p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow:ellipsis;">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <div class="text-center">
-                                <button type="button" style="border:none" class="bg-white color-black text-center" data-bs-toggle="modal" data-bs-target="#textCotribution1"><small>více</small>  <i class="fa-solid fa-angle-down"></i></button>
-                                <div class="modal" id="textCotribution1">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content"> 
-                                            <div class="modal-header">
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                            </div>   
-                                            <div class="modal-body text-start">
-                                                <p>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <h5>Název příspěvku</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                         </div>
                         <div class="d-flex justify-content-between p-2">
                             <div class="d-flex">
@@ -127,6 +113,15 @@
                                       <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                     </div>
                                     <div class="modal-body">
+                                        <div class="container bg-white">
+                                            <form action="" method="post">
+                                                <div class="form-floating">
+                                                    <textarea name="comments" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px; resize:none;"></textarea>
+                                                    <label for="floatingTextarea2">Komentář</label>
+                                                </div>
+                                                <div class="d-flex justify-content-end"><button class="btn btn-white shadow-lg m-3" type="submit"> Přidat</button></div>
+                                            </form>
+                                        </div>
                                         <div class="container-fluid row">
                                             <div class="col-12 col-lg-3">
                                                 <div class="d-flex">
@@ -144,16 +139,6 @@
                                             <div class="col-12 col-lg-9"><p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean id metus id velit ullamcorper pulvinar. Nulla pulvinar eleifend sem. Curabitur sagittis hendrerit ante. Suspendisse sagittis ultrices augue. Sed convallis magna eu sem. Maecenas libero. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Fusce aliquam vestibulum ipsum. Maecenas libero. Sed elit dui, pellentesque a, faucibus vel, interdum nec, diam. Etiam commodo dui eget wisi. Vivamus porttitor turpis ac leo. Phasellus enim erat, vestibulum vel, aliquam a, posuere eu, velit. Aliquam ante. Pellentesque arcu. Praesent dapibus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Pellentesque ipsum.</p></div>
                                         </div>
                                     </div>
-                                    <div class="container">
-                                        <form action="" method="post">
-                                            <div class="form-floating">
-                                                <textarea name="comments" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px; resize:none;"></textarea>
-                                                <label for="floatingTextarea2">Komentář</label>
-                                              </div>
-                                              <button class="btn btn-white shadow-lg m-3" type="submit"> Přidat</button>
-                                        </form>
-                                    </div>
-                              
                                   </div>
                                 </div>
                               </div>
@@ -178,7 +163,7 @@
                 </div>
             </div>
             
-            -->
+        
 
 
             <!-- konec první karty -->
@@ -275,7 +260,7 @@
                             }
                         }
 
-                        cardHolder.insertAdjacentHTML('beforeend', '<div class="col-12 col-lg-6 offset-lg-3 mt-2" id="post'+nextPost['id']+'"><div class="container"><div class="card" style="width: 100%; border: none;"><div class="container d-flex justify-content-between p-2"><div class="d-flex"><img src="'+nextPost['uzivatel_foto']+'" alt="Avatar Logo" style="width:50px; height: auto;" class="rounded-pill"><h4 class="my-auto m-3">'+nextPost['uzivatel_jmeno']+'</h4></div>'+dropdownItem+'</div><div><!---Carousel pro příspěvky--!--><div id="carousel'+nextPost['id']+'" class="carousel slide" data-bs-ride="carousel"> <!---Pro každý příspěvek se bude muset přidat jiné id, nejlépe id (příspěvku)--!--><div class="carousel-inner">'+foto+'</div><button class="carousel-control-prev" type="button" data-bs-target="#carousel'+nextPost['id']+'" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button><button class="carousel-control-next" type="button" data-bs-target="#carousel'+nextPost['id']+'" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button></div></div><div class="card-body" style="box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.1)"><p class="card-text" style="white-space: nowrap; overflow: hidden; text-overflow:ellipsis;">'+nextPost['nazev']+'</p><div class="text-center"><!--- Modal pro zobrazení více k příspěvku--><button type="button" style="border:none" class="bg-white color-black text-center" data-bs-toggle="modal" data-bs-target="#textContributionID'+nextPost['id']+'"><small>více</small> <i class="fa-solid fa-angle-down"></i></button><div class="modal" id="textContributionID'+nextPost['id']+'"> <!-- id = textContribution + id-příspěvku---><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body text-start"><p>'+nextPost['text']+'</p></div></div></div></div></div></div><div class="d-flex justify-content-between p-2"><div class="d-flex"><button style="border:none; background-color: transparent;" onclick="changeThumb('+nextPost['id']+', 1)"><i id="thumbsUpButton'+nextPost['id']+'" class="fa-regular fa-thumbs-up h2 my-auto"></i></button><button style="margin-left: 20px; border:none; background-color: transparent;" onclick="changeThumb('+nextPost['id']+', 2)"><i id="thumbsDownButton'+nextPost['id']+'" class="fa-regular fa-thumbs-down h2 my-auto"></i></button></div><div><i class="fa-regular fa-message btn btn-lg" data-bs-toggle="modal" data-bs-target="#comments'+nextPost['id']+'"></i></div><div class="modal fade" id="comments'+nextPost['id']+'"> <!-- ID bude vždy "comments + id-příspěvku" !--><div class="modal-dialog modal-xl"><div class="modal-content"><div class="modal-header"><h4 class="modal-title">Komentáře</h4><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="container-fluid row" id="commentsDiv'+nextPost['id']+'">'+comments+'</div></div><div class="container"><form action="#" id="addCommentForm'+nextPost['id']+'"><div class="form-floating"><textarea name="text" class="form-control" placeholder="Leave a comment here" id="commentText'+nextPost['id']+'" style="height: 100px; resize:none;"></textarea><label for="commentText">Komentář</label></div><input type="hidden" name="prispevek_id" id="commentPrispevekId'+nextPost['id']+'" value="'+nextPost['id']+'"><button class="btn btn-white shadow-lg my-3" onclick="return addComment('+nextPost['id']+')">Přidat</button></form></div></div></div></div></div><div class=" d-flex justify-content-between p-3" style="background-color: #F5F5F5; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3)"><div class="d-flex"><div class="d-flex my-auto"><i class="fa-regular fa-thumbs-up my-auto"></i><p class="my-auto" style="margin-left: 2px;" id="thumbsUp'+nextPost['id']+'">'+nextPost['thumbs_up']+'</p></div><div class="d-flex my-auto" style="margin-left: 20px;"><i class="fa-regular fa-thumbs-down my-auto"></i><p class="my-auto" style="margin-left: 2px;" id="thumbsDown'+nextPost['id']+'">'+nextPost['thumbs_down']+'</p></div></div><div class="d-flex"><p class="my-auto" id="commentCount'+nextPost['id']+'">'+nextPost['comments_count']+'</p><i class="fa-regular fa-message my-auto" style="margin-left: 7px;"></i></div></div></div></div></div>');
+                        cardHolder.insertAdjacentHTML('beforeend', '<div class="col-12 col-lg-6 offset-lg-3 mt-2" id="post'+nextPost['id']+'"><div class="container"><div class="card" style="width: 100%; border: none;"><div class="container d-flex justify-content-between p-2"><div class="d-flex"><img src="'+nextPost['uzivatel_foto']+'" alt="Avatar Logo" style="width:50px; height: auto;" class="rounded-pill"><h4 class="my-auto m-3">'+nextPost['uzivatel_jmeno']+'</h4></div>'+dropdownItem+'</div><div><!---Carousel pro příspěvky--!--><div id="carousel'+nextPost['id']+'" class="carousel slide" data-bs-ride="carousel"> <!---Pro každý příspěvek se bude muset přidat jiné id, nejlépe id (příspěvku)--!--><div class="carousel-inner">'+foto+'</div><button class="carousel-control-prev" type="button" data-bs-target="#carousel'+nextPost['id']+'" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button><button class="carousel-control-next" type="button" data-bs-target="#carousel'+nextPost['id']+'" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button></div></div><div class="card-body" style="box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.1)"><h5>'+nextPost['nazev']+'</h5><p class="card-text">'+nextPost['text']+'</p></div><div class="d-flex justify-content-between p-2"><div class="d-flex"><button style="border:none; background-color: transparent;" onclick="changeThumb('+nextPost['id']+', 1)"><i id="thumbsUpButton'+nextPost['id']+'" class="fa-regular fa-thumbs-up h2 my-auto"></i></button><button style="margin-left: 20px; border:none; background-color: transparent;" onclick="changeThumb('+nextPost['id']+', 2)"><i id="thumbsDownButton'+nextPost['id']+'" class="fa-regular fa-thumbs-down h2 my-auto"></i></button></div><div><i class="fa-regular fa-message btn btn-lg" data-bs-toggle="modal" data-bs-target="#comments'+nextPost['id']+'"></i></div><div class="modal fade" id="comments'+nextPost['id']+'"> <!-- ID bude vždy "comments + id-příspěvku" !--><div class="modal-dialog modal-xl"><div class="modal-content"><div class="modal-header"><h4 class="modal-title">Komentáře</h4><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="container-fluid row" id="commentsDiv'+nextPost['id']+'"><div class="container"><form action="#" id="addCommentForm'+nextPost['id']+'"><div class="form-floating"><textarea name="text" class="form-control" placeholder="Leave a comment here" id="commentText'+nextPost['id']+'" style="height: 100px; resize:none;"></textarea><label for="commentText">Komentář</label></div><input type="hidden" name="prispevek_id" id="commentPrispevekId'+nextPost['id']+'" value="'+nextPost['id']+'"><div class="d-flex justify-content-end"><button class="btn btn-white shadow-lg my-3" onclick="return addComment('+nextPost['id']+')">Přidat</button></div></form></div>'+comments+'</div></div></div></div></div></div><div class=" d-flex justify-content-between p-3" style="background-color: #F5F5F5; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3)"><div class="d-flex"><div class="d-flex my-auto"><i class="fa-regular fa-thumbs-up my-auto"></i><p class="my-auto" style="margin-left: 2px;" id="thumbsUp'+nextPost['id']+'">'+nextPost['thumbs_up']+'</p></div><div class="d-flex my-auto" style="margin-left: 20px;"><i class="fa-regular fa-thumbs-down my-auto"></i><p class="my-auto" style="margin-left: 2px;" id="thumbsDown'+nextPost['id']+'">'+nextPost['thumbs_down']+'</p></div></div><div class="d-flex"><p class="my-auto" id="commentCount'+nextPost['id']+'">'+nextPost['comments_count']+'</p><i class="fa-regular fa-message my-auto" style="margin-left: 7px;"></i></div></div></div></div></div>');
                         thumbClassChange(nextPost['thumb'],nextPost['id']);
                     }
                     return;
