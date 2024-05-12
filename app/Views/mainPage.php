@@ -40,7 +40,7 @@
         <div class="row" id='cardContainer'>
             <!-- karta -->
 
-            
+            <!----
             <div class="col-12 col-lg-6 offset-lg-3 mt-2">
                 <div class="container">
                     <div class="card" style="width: 100%; border: none;">
@@ -164,7 +164,7 @@
             </div>
             
         
-
+            --->
 
             <!-- konec první karty -->
         </div>
