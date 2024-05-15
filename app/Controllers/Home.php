@@ -47,7 +47,9 @@ class Home extends BaseController
 
     public function showMainPage()
     {
-        $data['userID'] = $this->userModel->where('uzivatelske_jmeno', $this->session->get('username'))->first()->id;
+        $user = $this->userModel->where('uzivatelske_jmeno', $this->session->get('username'))->first();
+        $data['userID'] = $user->id;
+        $data['userName'] = $user->uzivatelske_jmeno;
         return view('mainPage.php', $data);
     }
 

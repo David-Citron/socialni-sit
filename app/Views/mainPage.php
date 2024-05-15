@@ -25,7 +25,7 @@
                     <img src="<?= base_url('assets/img/user/avatar.png')?>" alt="Avatar Logo" style="width: 60px;" class="rounded-pill">
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="<?= base_url('user/'.$userID);?>">Profil</a></li>
+                    <li><a class="dropdown-item" href="<?= base_url('user/'.$userName);?>">Profil</a></li>
                     <li><a class="dropdown-item bg-danger text-white" href="<?= base_url('logout')?>">Odhlásit se</a></li>
                 </ul>
             </div>
