@@ -201,7 +201,7 @@
                 };
                 var nextPost = null;
 
-                fetch('http://localhost/socialni-sit/api/post/next/4', {
+                fetch('<?php echo base_url();?>api/post/next/4', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -270,7 +270,7 @@
             showCard();
 
             function deletePost(id){
-                fetch('http://localhost/socialni-sit/post/delete/' + id, {
+                fetch('<?php echo base_url();?>post/delete/' + id, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json'
@@ -295,7 +295,7 @@
                     prispevek_id: commentPrispevekId
                 };
 
-                fetch('http://localhost/socialni-sit/api/comment/add', {
+                fetch('<?php echo base_url();?>api/comment/add', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -336,7 +336,7 @@
                     'type':type
                 };
 
-                fetch('http://localhost/socialni-sit/api/thumb', {
+                fetch('<?php echo base_url();?>api/thumb', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
