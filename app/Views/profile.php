@@ -8,25 +8,30 @@
     <script src="https://kit.fontawesome.com/5b42e6ef0e.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <title>Profil</title>
+    <style>
+        .thumbActive{
+            color: blue;
+        }    
+        .thumbDisabled{
+            color: black;
+        }
+    </style>
 </head>
 <body>
-    <div class="container-fluid" style="background-color: #BEBEBE; min-height:40vh">
+    <div class="container-fluid" style="background-color: #BEBEBE; min-height:25vh">
         <div class="d-flex justify-content-end">
         <a href="<?= base_url('/')?>"><i class="fa-solid fa-house h3 m-2 text-white" style="color: white;"></i></a>
         </div>
         <div class="d-flex aling-items-center justify-content-start" style="min-height: 20vh; display: flex; justify-content: start; align-items: center;">
             <div class=" d-block d-sm-flex" style="width: 100%;">
                 <a href="#" style="margin-left: 5%;"><img src="<?= base_url('assets/img/user/avatar.png')?>" style="width:80px;" class="rounded-pill" alt="user"></a>
-                <div class="my-auto text-white" style="margin-left: 3%;"><h3>Jméno a příjmení</h3></div>
+                <div class="my-auto text-white" style="margin-left: 3%;"><h3><?php echo $user->uzivatelske_jmeno;?></h3></div>
             </div>
-        </div>
-        <div class="d-flex justify-content-end" style="margin-right: 20%;">
-            <a href="#"><button class="p-2 m-3" style="background-color: white; width: 160px; border:none; border-radius:30px; box-shadow: 0 3px 6px rgba(0, 0, 1, 0.8); ">Přidat</button></a>
         </div>
     </div>
     <div class="container-fluid  mt-4">
         <div class="row" id='cardContainer'>
-            <!-----Začátek karty----->
+            <!--
             <div class="col-12 col-lg-6 offset-lg-3 mt-2">
                 <div class="container">
                     <div class="card" style="width: 100%; border: none;">
@@ -148,8 +153,220 @@
                       </div>
                 </div>
             </div>
-        <!----Konec karty----->
+        -->
         </div>
       </div>
+      <script>
+            function isBottom() {
+                return window.innerHeight + window.scrollY >= document.body.offsetHeight;
+            }
+
+            function handleScroll() {
+                if (isBottom()) {
+                    showCard();
+                }
+            }
+
+            window.addEventListener('scroll', handleScroll);
+
+            var currentId = 0;
+            function showCard(){
+                var cardHolder = document.getElementById('cardContainer');
+                const post = {
+                    id: currentId,
+                    user_id: <?php echo $user->id;?>
+                };
+                var nextPost = null;
+
+                fetch('http://localhost/socialni-sit/api/post/user/next/4', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(post)
+                })
+                .then(response => {
+                    return response.json();
+                })
+                .then(data => {
+                    if(data == null){
+                        return;
+                    }
+                    console.log(data);
+                    var postsCount = data['posts'].length;
+                    
+                    for (j = 0; j < postsCount; j++){
+                        
+                        nextPost = data['posts'][j];
+                        currentId = nextPost['id'];
+                        var dropdownItem = '<div class="dropdown my-auto"> <!-- Dropdown container --><a class="btn" data-bs-toggle="dropdown"><i class="fa-solid fa-ellipsis-vertical h2 my-auto" style="color: black;"></i></a> <!-- Dropdown toggle button --><ul class="dropdown-menu"> <!-- Dropdown menu --><li><a class="dropdown-item" href="#">Upravit</a></li> <!-- Edit option --><li> <!-- Delete option with modal trigger --><button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalDelete'+nextPost['id']+'">Smazat</button></li></ul><!-- Modal for deleting post --><div class="modal" id="modalDelete'+nextPost['id']+'"> <!-- Modal ID dynamically generated --><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body">Opravdu si přejete příspěvek smazat?</div><div class="modal-footer"><button type="button" class="btn btn-danger" data-bs-dismiss="modal">Zrušit</button><button type="button" class="btn btn-success" onclick="deletePost('+nextPost['id']+')">Ano</button></div></div></div></div></div>';
+
+                        if(nextPost['dropdown'] == false){
+                            dropdownItem = '';
+                        }
+
+                        var foto = '';
+                        if(nextPost['foto'] != null){
+                            for (i=0; i< nextPost['foto'].length; i++){
+                                foto = foto + '<div class="carousel-item';
+                                if(i == 0){
+                                    foto = foto + ' active';
+                                }
+                                foto = foto + '"><img src="'+nextPost['foto'][i]+'" alt="" class="d-block w-100"></div>';
+                            }
+                        }
+
+                        var comments = '';
+                        if(nextPost['comments'] != null){
+                            for (i=0; i< nextPost['comments'].length; i++){
+                                comments = comments + '<div class="col-12 col-lg-3 mb-2" id="commenterHolding'+nextPost['id']+'"><div class="d-flex"><img src="'+nextPost['comments'][i]['uzivatel_foto']+'" alt="Avatar Logo" style="width:50px; height: auto; " class=" rounded-pill"><p class="small my-auto" style="margin-left: 8px;">'+nextPost['comments'][i]['uzivatel_jmeno']+'</p></div></div><div class="col-12 col-lg-9';
+                                if(i != nextPost['comments'].length - 1){
+                                    comments = comments + ' mb-4';
+                                }else{
+                                    comments = comments + ' mb-0';
+                                }
+                                comments = comments + '" ';
+                                if(i == nextPost['comments'].length - 1){
+                                    comments = comments + ' id="commentHolding'+nextPost['id']+'"';
+                                }
+                                comments = comments + '><p ';
+                                if(i == nextPost['comments'].length - 1){
+                                    comments = comments + 'class="mb-0" id="commentParagraph'+nextPost['id']+'"';
+                                }
+                                comments = comments + '>' +nextPost['comments'][i]['text']+'</p></div>';
+                            }
+                        }
+
+                        cardHolder.insertAdjacentHTML('beforeend', '<div class="col-12 col-lg-6 offset-lg-3 mt-2" id="post'+nextPost['id']+'"><div class="container"><div class="card" style="width: 100%; border: none;"><div class="container d-flex justify-content-between p-2"><div class="d-flex"><a href="#"><img src="'+nextPost['uzivatel_foto']+'" alt="Avatar Logo" style="width:50px; height: auto;" class="rounded-pill"></a><h4 class="my-auto m-3">'+nextPost['uzivatel_jmeno']+'</h4></div>'+dropdownItem+'</div><div><!---Carousel pro příspěvky--!--><div id="carousel'+nextPost['id']+'" class="carousel slide" data-bs-ride="carousel"> <!---Pro každý příspěvek se bude muset přidat jiné id, nejlépe id (příspěvku)--!--><div class="carousel-inner">'+foto+'</div><button class="carousel-control-prev" type="button" data-bs-target="#carousel'+nextPost['id']+'" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button><button class="carousel-control-next" type="button" data-bs-target="#carousel'+nextPost['id']+'" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button></div></div><div class="card-body" style="box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.1)"><h5>'+nextPost['nazev']+'</h5><p class="card-text">'+nextPost['text']+'</p></div><div class="d-flex justify-content-between p-2"><div class="d-flex"><button style="border:none; background-color: transparent;" onclick="changeThumb('+nextPost['id']+', 1)"><i id="thumbsUpButton'+nextPost['id']+'" class="fa-regular fa-thumbs-up h2 my-auto"></i></button><button style="margin-left: 20px; border:none; background-color: transparent;" onclick="changeThumb('+nextPost['id']+', 2)"><i id="thumbsDownButton'+nextPost['id']+'" class="fa-regular fa-thumbs-down h2 my-auto"></i></button></div><div><i class="fa-regular fa-message btn btn-lg" data-bs-toggle="modal" data-bs-target="#comments'+nextPost['id']+'"></i></div><div class="modal fade" id="comments'+nextPost['id']+'"> <!-- ID bude vždy "comments + id-příspěvku" !--><div class="modal-dialog modal-xl"><div class="modal-content"><div class="modal-header"><h4 class="modal-title">Komentáře</h4><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="container-fluid row" id="commentsDiv'+nextPost['id']+'"><div class="container"><form action="#" id="addCommentForm'+nextPost['id']+'"><div class="form-floating"><textarea name="text" class="form-control" placeholder="Leave a comment here" id="commentText'+nextPost['id']+'" style="height: 100px; resize:none;"></textarea><label for="commentText">Komentář</label></div><input type="hidden" name="prispevek_id" id="commentPrispevekId'+nextPost['id']+'" value="'+nextPost['id']+'"><div class="d-flex justify-content-end"><button class="btn btn-white shadow-lg my-3" onclick="return addComment('+nextPost['id']+')">Přidat</button></div></form></div>'+comments+'</div></div></div></div></div></div><div class=" d-flex justify-content-between p-3" style="background-color: #F5F5F5; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3)"><div class="d-flex"><div class="d-flex my-auto"><i class="fa-regular fa-thumbs-up my-auto"></i><p class="my-auto" style="margin-left: 2px;" id="thumbsUp'+nextPost['id']+'">'+nextPost['thumbs_up']+'</p></div><div class="d-flex my-auto" style="margin-left: 20px;"><i class="fa-regular fa-thumbs-down my-auto"></i><p class="my-auto" style="margin-left: 2px;" id="thumbsDown'+nextPost['id']+'">'+nextPost['thumbs_down']+'</p></div></div><div class="d-flex"><p class="my-auto" id="commentCount'+nextPost['id']+'">'+nextPost['comments_count']+'</p><i class="fa-regular fa-message my-auto" style="margin-left: 7px;"></i></div></div></div></div></div>');
+                        thumbClassChange(nextPost['thumb'],nextPost['id']);
+                    }
+                    return;
+                })  
+            }
+
+            showCard();
+
+            function deletePost(id){
+                fetch('http://localhost/socialni-sit/post/delete/' + id, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => {
+                    return response;
+                })
+                .then(data => {
+                    var myModal = document.getElementById('modalDelete'+id);
+                    var modal = bootstrap.Modal.getInstance(myModal);
+                    modal.hide();
+                    document.getElementById('post'+id).remove();
+                })
+            }
+
+            function addComment(id){
+                var commentText = document.getElementById('commentText' + id).value;
+                var commentPrispevekId = document.getElementById('commentPrispevekId' + id).value;
+                var passingData = {
+                    text: commentText,
+                    prispevek_id: commentPrispevekId
+                };
+
+                fetch('http://localhost/socialni-sit/api/comment/add', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(passingData)
+                })
+                .then(response => {
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);
+                    var commentsDiv = document.getElementById('commentsDiv' + id);
+                    var element = document.getElementById('commentHolding'+id);
+                    if (element) {
+                        console.log('Removed element 1');
+                        element.className = element.className.replace('mb-0', 'mb-4');
+                        element.removeAttribute('id');
+                    }
+                    var element2 = document.getElementById('commentParagraph'+id);
+                    if (element2) {
+                        console.log('Removed element 2');
+                        element2.className = element2.className.replace('mb-0', 'mb-2');
+                        element2.removeAttribute('id');
+                    }
+                    var comment = data['comment'];
+                    commentsDiv.insertAdjacentHTML('beforeend', '<div class="col-12 col-lg-3 mb-2" id="commenterHolding'+id+'"><div class="d-flex"><img src="'+comment['uzivatel_foto']+'" alt="Avatar Logo" style="width:50px; height: auto; " class=" rounded-pill"><p class="small my-auto" style="margin-left: 8px;">'+comment['uzivatel_jmeno']+'</p></div></div><div class="col-12 col-lg-9 mb-0" id="commentHolding'+id+'"><p class="mb-0" id="commentParagraph'+id+'">'+comment['text']+'</p></div>');
+                    document.getElementById('commentText' + id).value = '';
+                    var commentCountString = document.getElementById('commentCount' + id).innerHTML;
+                    var commentCount = parseInt(commentCountString);
+                    document.getElementById('commentCount' + id).innerHTML = (commentCount + 1);
+                })
+                return false;
+            }
+
+            function changeThumb(prispevek_ID, type){
+                var requestData = {
+                    'post_ID':prispevek_ID,
+                    'type':type
+                };
+
+                fetch('http://localhost/socialni-sit/api/thumb', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestData)
+                })
+                .then(response => {
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);
+                    var thumbsUpButton = document.getElementById('thumbsUpButton' + prispevek_ID);
+                    var thumbsDownButton = document.getElementById('thumbsDownButton' + prispevek_ID);
+                    
+                    var thumbsUpCount = document.getElementById('thumbsUp' + prispevek_ID);
+                    var thumbsDownCount = document.getElementById('thumbsDown' + prispevek_ID);
+                    
+                    thumbsUpCount.innerHTML = data['thumb']['thumbsUpCount'];
+                    thumbsDownCount.innerHTML = data['thumb']['thumbsDownCount'];
+
+                    if(data['message'] == "Palec odstraněn"){
+                        thumbsDownButton.classList.remove("thumbActive");
+                        thumbsDownButton.classList.add("thumbDisabled");
+                        thumbsUpButton.classList.remove("thumbActive");
+                        thumbsUpButton.classList.add("thumbDisabled");
+                        return;
+                    }
+                    
+                    thumbClassChange(type, prispevek_ID);
+                })
+            }
+
+            function thumbClassChange(type, prispevek_ID){
+                var thumbsUpButton = document.getElementById('thumbsUpButton' + prispevek_ID);
+                var thumbsDownButton = document.getElementById('thumbsDownButton' + prispevek_ID);
+
+                if(type == null){
+                    thumbsUpButton.classList.remove("thumbActive");
+                    thumbsUpButton.classList.add("thumbDisabled");
+                    thumbsDownButton.classList.remove("thumbActive");
+                    thumbsDownButton.classList.add("thumbDisabled");
+                }else if(type == 1){
+                    thumbsDownButton.classList.remove("thumbActive");
+                    thumbsDownButton.classList.add("thumbDisabled");
+                    thumbsUpButton.classList.remove("thumbDisabled");
+                    thumbsUpButton.classList.add("thumbActive");
+                }else if(type == 2){
+                    thumbsUpButton.classList.remove("thumbActive");
+                    thumbsUpButton.classList.add("thumbDisabled");
+                    thumbsDownButton.classList.remove("thumbDisabled");
+                    thumbsDownButton.classList.add("thumbActive");
+                }
+            }
+      </script>
 </body>
 </html>

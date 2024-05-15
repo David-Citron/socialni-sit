@@ -54,7 +54,11 @@ class Home extends BaseController
     public function showProfile($username)
     {
         $data['user'] = $this->userModel->where('uzivatelske_jmeno', $username)->first();
-        return view('profile', $data);
+        if($data['user'] != null)
+        {
+            return view('profile', $data);
+        }
+        return view('errors/html/error_404.php', ['message'=>'Tento uživatel neexistuje']);
     }
 
     public function showPostCreateForm()

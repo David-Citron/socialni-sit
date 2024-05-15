@@ -33,6 +33,7 @@ $routes->group('api', ['filter' => 'auth'], static function ($routes) {
     $routes->post('post', 'Post::apiShowPost');
     $routes->post('post/next', 'Post::apiShowNextPost');
     $routes->post('post/next/(:num)', 'Post::apiShowNextPostMultiple/$1');
+    $routes->post('post/user/next/(:num)', 'Post::apiShowNextPostMultipleByUser/$1');
     $routes->post('comment/add', 'Post::addComment');
     $routes->post('thumb', 'Post::addThumb');
 });

@@ -199,6 +199,35 @@ class Post extends BaseController
         return $this->respond(['posts' => $posts, 'message' => 'Příspěvky nalezeny', 'status' => 200]);
     }
 
+    public function apiShowNextPostMultipleByUser($count)
+    {
+        $requestedId = $this->request->getVar('id');
+        $userId = $this->request->getVar('user_id');
+        $allPosts = $this->postModel->where('uzivatel_id', $userId)->orderBy('id', 'desc')->findAll();
+        $next = 0;
+        if ($requestedId == 0){
+            $next = $count;
+        }
+        $ids = [];
+        foreach($allPosts as $post)
+        {
+            if ($post->id == $requestedId)
+            {
+                $next = $count;
+            }else if($next > 0)
+            {
+                $next = $next -1;
+                $ids[] = $post->id;
+            }
+        }
+        $posts = [];
+        foreach ($ids as $key => $id)
+        {
+            $posts[$key] = $this->retrievePost($id);
+        }
+        return $this->respond(['posts' => $posts, 'message' => 'Příspěvky nalezeny', 'status' => 200]);
+    }
+
     public function retrievePost($id)
     {
         $post = (array) $this->postModel->find($id);
