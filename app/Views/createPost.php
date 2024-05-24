@@ -106,16 +106,16 @@
 </head>
 
 <body>
-    <form action="<?php echo base_url('post/create'); ?>" method="post" enctype="multipart/form-data" class="d-flex justify-content-center">
+    <form action="<?php if(!isset($post))echo base_url('post/create'); else echo base_url('post/edit/'.$post->id)?>" method="post" enctype="multipart/form-data" class="d-flex justify-content-center">
         <div class="d-flex flex-column justify-content-center align-items-center" style="min-height: 100vh; max-width: 60%">
             <div class="pt-3">
-                <h2 style="text-align: center">Nový příspěvek</h2>
+                <h2 style="text-align: center"><?php if(isset($post)) echo "Upravit příspěvek"; else echo "Nový příspěvek";?></h2>
             </div>
             <div class="d-flex justify-content-center row m-2">
                 <div class="card card-box p-2">
                     <label for="imageInput" style="border: 2px dashed #ccc; width: 100%; cursor: pointer; min-height: 250px; height:100%;">
-                        <input type="file" multiple required accept="image/*" id="imageInput" name="obrazky[]" style="display: none;">
-                        Klepnutím přidejte obrázky
+                        <input type="file" multiple <?php if(!isset($post)) echo "required";?> accept="image/*" id="imageInput" name="obrazky[]" style="display: none;">
+                        <?php if(isset($post)) echo 'Klepnutím vyberte nové obrázky'; else echo 'Klepnutím přidejte obrázky'?>
                     </label>
                     <div class="container container-preview" id="previewHolder">
                        
@@ -125,10 +125,10 @@
                 <div class="card card-outside card-box">
                     <div class="card-inside">
                         <div class="input-holder">
-                            <input placeholder="Zadejte název příspěvku" type="text" name="nazev" style="width: 100%; height: 100%" required>
+                            <input placeholder="Zadejte název příspěvku" type="text" name="nazev" style="width: 100%; height: 100%" required <?php if(isset($post)) echo 'value="'.$post->nazev.'"';?>>
                         </div>
                         <div class="textarea-holder">
-                            <textarea id="textInput" name="text" placeholder="Zadejte text" required></textarea>
+                            <textarea id="textInput" name="text" placeholder="Zadejte text" required ><?php if(isset($post)) echo $post->text;?></textarea>
                         </div>
                     </div>
                 </div>
@@ -144,6 +144,10 @@
         var previewHolder = document.getElementById('previewHolder');
         document.getElementById('imageInput').addEventListener('change', function (event) {
             var files = event.target.files;
+            if (files.length == 0) {
+                <?php if (isset($post))echo "loadPictures();";?>
+                return;
+            }
             if (files.length > 5) {
                 alert('Můžete nahrát maximálně 5 obrázků.');
                 event.target.value = ''; // Reset the input
@@ -153,12 +157,24 @@
             for (var i = 0; i < files.length; i++) {
                 var reader = new FileReader();
                 reader.onload = function (e) {
-                    var html = '<div class="card card-preview"><img src="' + e.target.result + '" alt="Preview ' + (i + 1) + '"></div>';
+                    var html = '<div class="card card-preview" style="overflow:hidden;"><img src="' + e.target.result + '" alt="Preview ' + (i + 1) + '" style="object-fit: cover;"></div>';
                     previewHolder.insertAdjacentHTML('beforeend', html);
                 }
                 reader.readAsDataURL(files[i]);
             }
         });
+
+        <?php if (!isset($post)){ echo "</script></body></html>"; return;}?>
+
+        function loadPictures() {
+            <?php foreach($post->fotky as $key => $foto) {?>
+            previewHolder.innerHTML = '';
+            var html = '<div class="card card-preview" style="overflow:hidden;"><img src="' + '<?=base_url('assets/img/post/'.$foto->nazev)?>' + '" alt="Preview ' + (<?=$key?> + 1) + '" style="object-fit: cover;"></div>';
+            previewHolder.insertAdjacentHTML('beforeend', html);
+            <?php } ?>
+        }
+
+        loadPictures();
     </script>
 </body>
 

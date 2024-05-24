@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controllers;
+use App\Models\FotoModel;
 use App\Models\PostModel;
 use App\Models\UserModel;
 
@@ -9,11 +10,13 @@ class Home extends BaseController
     var $session;
     var $postModel;
     var $userModel;
+    var $fotoModel;
 
     public function __construct()
     {
         $this->userModel = new UserModel();
         $this->postModel = new PostModel();
+        $this->fotoModel = new FotoModel();
         $this->session = session();
     }
     
@@ -50,6 +53,13 @@ class Home extends BaseController
         $user = $this->userModel->where('uzivatelske_jmeno', $this->session->get('username'))->first();
         $data['userID'] = $user->id;
         $data['userName'] = $user->uzivatelske_jmeno;
+        $postController = new Post();
+        $foundPosts = $this->postModel->orderBy('id', 'desc')->findAll(4);
+        $posts = [];
+        foreach ($foundPosts as $post) {
+            array_push($posts, $postController->retrievePost($post->id));
+        }
+        $data['posts'] = $posts;
         return view('mainPage.php', $data);
     }
 
@@ -71,6 +81,10 @@ class Home extends BaseController
     public function showPostEditForm($id)
     {
         $data['post'] = $this->postModel->find($id);
-        return view('editPost.php', $data);
+        if (empty($data['post'])) {
+            return view('errors/html/error_404', ['message' => 'Tento příspěvek neexistuje']);
+        }
+        $data['post']->fotky = $this->fotoModel->where('prispevek_id', $id)->findAll();
+        return view('createPost.php', $data);
     }
 }

@@ -71,54 +71,29 @@ class Post extends BaseController
         $text = $this->request->getVar('text');
         $pictures = $this->request->getFiles()['obrazky'];
 
-        $currentPost = $this->postModel->find($id);
-        
         $data = [
             'nazev' => $name,
             'text' => $text,
             'id' => $id
         ];
 
-        $picturesAlreadyInDatabase[] = null;
-
-        foreach($pictures as $picture)
-        {
-            if ($this->fotoModel->where('nazev', $picture->getName())->first() != null)
-            {
-                $picturesAlreadyInDatabase = $this->fotoModel->where('nazev', $picture->getName()->first()->id);
+        if (isset($pictures)) {
+            $existingPictures = $this->fotoModel->where('prispevek_id', $id)->findAll();
+            foreach ($existingPictures as $existingPicture) {
+                $this->fotoModel->delete($existingPicture->id);
             }
 
-            $pictureData = [
-                'nazev' => $picture->getName(),
-                'alt_popis' => null,
-                'prispevek_id' => $id
-            ];
-            $this->fotoModel->insert();
-        }
-
-        $allPicturesInDatabase = $this->fotoModel->where('prispevek_id', $id)->findAll();
-        $deletePictures = [];
-
-        foreach($allPicturesInDatabase as $picSaved)
-        {
-            $picAlreadySaved = false;
-            foreach ($picturesAlreadyInDatabase as $picInserted)
+            foreach($pictures as $picture)
             {
-                if($picSaved->id == $picInserted)
-                {
-                    $picAlreadySaved = true;
-                }
+                $newFileName = 'foto'.($this->fotoModel->orderBy('id', 'desc')->first()->id + 1).'.'.$picture->getExtension();
+                $pictureData = [
+                    'nazev' => $newFileName,
+                    'alt_popis' => null,
+                    'prispevek_id' => $id
+                ];
+                $this->fotoModel->insert($pictureData);
+                $picture->move(ROOTPATH.'assets/img/post', $newFileName);
             }
-
-            if($picAlreadySaved == false)
-            {
-                $deletePictures = $picSaved->id;
-            }
-        }
-
-        foreach ($deletePictures as $delPic)
-        {
-            $this->fotoModel->delete($delPic);
         }
 
         $this->postModel->save($data);
