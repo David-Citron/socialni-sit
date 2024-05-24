@@ -128,7 +128,7 @@
                             <input placeholder="Zadejte název příspěvku" type="text" name="nazev" style="width: 100%; height: 100%" required <?php if(isset($post)) echo 'value="'.$post->nazev.'"';?>>
                         </div>
                         <div class="textarea-holder">
-                            <textarea id="textInput" name="text" placeholder="Zadejte text" required ><?php if(isset($post)) echo $post->text;?></textarea>
+                            <textarea id="textInput" name="text" placeholder="Zadejte text"><?php if(isset($post)) echo $post->text;?></textarea>
                         </div>
                     </div>
                 </div>
