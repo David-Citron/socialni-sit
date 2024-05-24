@@ -68,8 +68,16 @@ class Home extends BaseController
         $data['user'] = $this->userModel->where('uzivatelske_jmeno', $username)->first();
         if($data['user'] != null)
         {
+            $postController = new Post();
+            $foundPosts = $this->postModel->where('uzivatel_id', $data['user']->id)->orderBy('id', 'desc')->findAll(4);
+            $posts = [];
+            foreach ($foundPosts as $post) {
+                array_push($posts, $postController->retrievePost($post->id));
+            }
+            $data['posts'] = $posts;
             return view('profile', $data);
         }
+        
         return view('errors/html/error_404.php', ['message'=>'Tento uživatel neexistuje']);
     }
 
