@@ -81,9 +81,15 @@ class Post extends BaseController
             return $picture->isValid() && !$picture->hasMoved();
         });
 
+        $fotoPath = ROOTPATH.'assets/img/post/';
+
         if (!empty($validPictures)) {
             $existingPictures = $this->fotoModel->where('prispevek_id', $id)->findAll();
             foreach ($existingPictures as $existingPicture) {
+                if (file_exists($fotoPath.$existingPicture->nazev)) 
+                {
+                    unlink($fotoPath.$existingPicture->nazev);
+                }
                 $this->fotoModel->delete($existingPicture->id);
             }
 
