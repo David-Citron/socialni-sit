@@ -77,14 +77,17 @@ class Post extends BaseController
             'id' => $id
         ];
 
-        if (isset($pictures)) {
+        $validPictures = array_filter($pictures, function($picture) {
+            return $picture->isValid() && !$picture->hasMoved();
+        });
+
+        if (!empty($validPictures)) {
             $existingPictures = $this->fotoModel->where('prispevek_id', $id)->findAll();
             foreach ($existingPictures as $existingPicture) {
                 $this->fotoModel->delete($existingPicture->id);
             }
 
-            foreach($pictures as $picture)
-            {
+            foreach ($validPictures as $picture) {
                 $newFileName = 'foto'.($this->fotoModel->orderBy('id', 'desc')->first()->id + 1).'.'.$picture->getExtension();
                 $pictureData = [
                     'nazev' => $newFileName,
