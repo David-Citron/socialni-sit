@@ -282,7 +282,7 @@
                 if(i == nextPost['comments'].length - 1){
                     comments = comments + 'class="mb-0" id="commentParagraph'+nextPost['id']+'"';
                 }
-                comments = comments + '>' +nextPost['comments'][i]['text']+'</p></div>';
+                comments = comments + '>' +nextPost['comments'][i]['text']+'</p></div><hr />';
             }
         }
 
