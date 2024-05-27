@@ -15,6 +15,9 @@
         .thumbDisabled{
             color: black;
         }
+        #navbar{
+            transition: top 1s;
+        }
     </style>
 </head>
 <body class="pb-4">
