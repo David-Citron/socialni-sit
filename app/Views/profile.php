@@ -157,8 +157,8 @@
         -->
         </div>
       </div>
-      <script>
-       document.getElementById('uploadButton').addEventListener('click', function() {
+<script>
+    document.getElementById('uploadButton').addEventListener('click', function() {
         document.getElementById('fileSelector').click();
     });
 
