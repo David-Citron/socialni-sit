@@ -323,4 +323,43 @@ class Post extends BaseController
         }
         return $this->respond(['message' => 'Palec změněn', 'status' => 200, 'thumb' => $response]);
     }
+
+    public function changeProfilePicture()
+{
+    $username = $this->session->get('username');
+
+    // Retrieve user data using the username
+    $user = $this->userModel->where('uzivatelske_jmeno', $username)->first();
+
+    if (!$user) {
+        return $this->response->setJSON(['success' => false, 'message' => 'User not found']);
+    }
+
+    // Get the file from the form input
+    $file = $this->request->getFile('userfile');
+
+    // Ensure a file is being uploaded
+    if ($file && $file->isValid() && !$file->hasMoved()) {
+        // Check if the user already has an image and delete the old image file if it exists
+        if ($user->obrazek) {
+            $existingFilePath = ROOTPATH . 'assets/img/user/' . $user->obrazek;
+            if (file_exists($existingFilePath)) {
+                unlink($existingFilePath);
+            }
+        }
+
+        // Generate the new file name using the username
+        $newFileName = $username . '.' . $file->getClientExtension();
+
+        // Move the file to the desired directory
+        $file->move(ROOTPATH . 'assets/img/user', $newFileName);
+
+        // Update the user model with the new file name
+        $this->userModel->update($user->id, ['obrazek' => $newFileName]);
+
+        return $this->response->setJSON(['success' => true, 'message' => 'Profile image updated successfully']);
+    } else {
+        return $this->response->setJSON(['success' => false, 'message' => 'Invalid file upload']);
+    }
+}
 }

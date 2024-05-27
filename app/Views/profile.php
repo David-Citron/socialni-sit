@@ -24,7 +24,8 @@
         </div>
         <div class="d-flex aling-items-center justify-content-start" style="min-height: 20vh; display: flex; justify-content: start; align-items: center;">
             <div class=" d-block d-sm-flex" style="width: 100%;">
-                <a href="#" style="margin-left: 5%;"><img src="<?= base_url('assets/img/user/avatar.png')?>" style="width:80px;" class="rounded-pill" alt="user"></a>
+                <button id="uploadButton" style="margin-left: 5%; border: none; background-color: transparent;"><img src="<?= base_url('assets/img/user/'.$user->obrazek)?>" style="width:80px;" class="rounded-pill" alt="user"></button>
+                <input type="file" id="fileSelector" style="display:none;" />
                 <div class="my-auto text-white" style="margin-left: 3%;"><h3><?php echo $user->uzivatelske_jmeno;?></h3></div>
             </div>
         </div>
@@ -157,6 +158,40 @@
         </div>
       </div>
       <script>
+       document.getElementById('uploadButton').addEventListener('click', function() {
+        document.getElementById('fileSelector').click();
+    });
+
+    document.getElementById('fileSelector').addEventListener('change', function(event) {
+        var file = event.target.files[0];
+        var apiUrl = '<?= base_url('api/profile-picture') ?>';
+        if (file) {
+            var formData = new FormData();
+            formData.append('userfile', file);
+
+            fetch(apiUrl, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest' // Optional: for distinguishing AJAX requests
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                // Handle success or failure
+                if (data.success) {
+                    alert('Profile image updated successfully');
+                } else {
+                    alert('Error updating profile image: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    });
+
     var prevScrollpos = window.pageYOffset;
     window.onscroll = function() {
         var currentScrollPos = window.pageYOffset;

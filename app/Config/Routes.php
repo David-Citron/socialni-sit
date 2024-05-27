@@ -36,4 +36,5 @@ $routes->group('api', ['filter' => 'auth'], static function ($routes) {
     $routes->post('post/user/next/(:num)', 'Post::apiShowNextPostMultipleByUser/$1');
     $routes->post('comment/add', 'Post::addComment');
     $routes->post('thumb', 'Post::addThumb');
+    $routes->post('profile-picture', 'Post::changeProfilePicture');
 });
