@@ -196,7 +196,7 @@
 
     window.addEventListener('scroll', handleScroll);
 
-    var currentId = <?php echo $posts[array_key_last($posts)]['id'];?>;
+    var currentId = <?php if (isset($posts[array_key_last($posts)]['id']))echo $posts[array_key_last($posts)]['id']; else echo 0;?>;
     var loading = false;
 
     function showCard() {
