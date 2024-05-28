@@ -53,6 +53,7 @@ class Home extends BaseController
         $user = $this->userModel->where('uzivatelske_jmeno', $this->session->get('username'))->first();
         $data['userID'] = $user->id;
         $data['userName'] = $user->uzivatelske_jmeno;
+        $data['userFoto'] = $user->obrazek;
         $postController = new Post();
         $foundPosts = $this->postModel->orderBy('id', 'desc')->findAll(4);
         $posts = [];

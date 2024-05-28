@@ -25,7 +25,7 @@
         <div class="container-fluid">
             <div class="dropdown navbar-brand">
                 <button data-bs-toggle="dropdown" style="background-color: white; border:none;">
-                    <img src="<?= base_url('assets/img/user/avatar.png')?>" alt="Avatar Logo" style="width: 60px;" class="rounded-pill">
+                    <img src="<?= base_url('assets/img/user/'.$userFoto)?>" alt="Avatar Logo" style="width: 60px;" class="rounded-pill">
                 </button>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="<?= base_url('user/'.$userName);?>">Profil</a></li>
