@@ -158,13 +158,14 @@
         </div>
       </div>
 <script>
+    <?php if ($user->uzivatelske_jmeno == session()->get('username')) echo "
     document.getElementById('uploadButton').addEventListener('click', function() {
         document.getElementById('fileSelector').click();
     });
 
     document.getElementById('fileSelector').addEventListener('change', function(event) {
         var file = event.target.files[0];
-        var apiUrl = '<?= base_url('api/profile-picture') ?>';
+        var apiUrl = '".base_url('api/profile-picture')."';
         if (file) {
             var formData = new FormData();
             formData.append('userfile', file);
@@ -192,6 +193,8 @@
             });
         }
     });
+
+    ";?>
 
     var prevScrollpos = window.pageYOffset;
     window.onscroll = function() {
