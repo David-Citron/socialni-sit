@@ -182,6 +182,7 @@
                 // Handle success or failure
                 if (data.success) {
                     alert('Profile image updated successfully');
+                    location.reload();
                 } else {
                     alert('Error updating profile image: ' + data.message);
                 }
