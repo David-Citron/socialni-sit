@@ -21,8 +21,9 @@ class Auth extends BaseController
     // Passwords get hashed before saving
     function register()
     {
+        $username = $this->request->getVar('name');
         $data = [
-            'uzivatelske_jmeno' => $this->request->getVar('name'),
+            'uzivatelske_jmeno' => $username,
             'heslo' => $this->request->getVar('password'),
             'heslo2' => $this->request->getVar('password2'),
             'email' => $this->request->getVar('email'),
@@ -35,6 +36,17 @@ class Auth extends BaseController
         }
 
         $newUser = $this->refactorRegistrationData($data);
+
+        $defaultProfilePicPath = './assets/img/avatar.png';
+
+        $newProfilePicPath = './assets/img/user/' . $data['uzivatelske_jmeno'] . '.png';
+
+        if (!copy($defaultProfilePicPath, $newProfilePicPath)) {
+            echo "Failed to copy $defaultProfilePicPath...\n";
+            return redirect()->to('register')->with('error', 'Error - create image.');
+        }
+
+        $newUser['obrazek'] = $username.'.png';
 
         $this->userModel->insert($newUser);
         $this->setSessionData($newUser);
