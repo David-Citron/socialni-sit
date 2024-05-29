@@ -115,7 +115,7 @@
                 <div class="card card-box p-2">
                     <label for="imageInput" style="border: 2px dashed #ccc; width: 100%; cursor: pointer; min-height: 250px; height:100%;">
                         <input type="file" multiple <?php if(!isset($post)) echo "required";?> accept="image/*" id="imageInput" name="obrazky[]" style="display: none;">
-                        <?php if(isset($post)) echo 'Klepnutím vyberte nové obrázky'; else echo 'Klepnutím přidejte obrázky'?>
+                        <?php if(isset($post)) echo 'Klepnutím vyberte nové obrázky <br> max. 5'; else echo 'Klepnutím přidejte obrázky <br> max. 5'?>
                     </label>
                     <div class="container container-preview" id="previewHolder">
                        
@@ -125,7 +125,7 @@
                 <div class="card card-outside card-box">
                     <div class="card-inside">
                         <div class="input-holder">
-                            <input placeholder="Zadejte název příspěvku" type="text" name="nazev" style="width: 100%; height: 100%" required <?php if(isset($post)) echo 'value="'.$post->nazev.'"';?>>
+                            <input placeholder="Zadejte název příspěvku" type="text" name="nazev" style="width: 100%; height: 100%" <?php if(isset($post)) echo 'value="'.$post->nazev.'"';?>>
                         </div>
                         <div class="textarea-holder">
                             <textarea id="textInput" name="text" placeholder="Zadejte text"><?php if(isset($post)) echo $post->text;?></textarea>
