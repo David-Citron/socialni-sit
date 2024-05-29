@@ -316,8 +316,13 @@
     function addComment(id){
         var commentText = document.getElementById('commentText' + id).value;
         var commentPrispevekId = document.getElementById('commentPrispevekId' + id).value;
+        var validCharacter = /[^\s]/.test(commentText);
         if(!commentText){
             alert('Komentář je povinný');
+            return false;
+        }
+        if(!validCharacter){
+            alert('Komentář musí obsahovat alespoň jeden znak, který není mezera');
             return false;
         }
         var passingData = {
