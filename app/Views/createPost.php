@@ -125,10 +125,10 @@
                 <div class="card card-outside card-box">
                     <div class="card-inside">
                         <div class="input-holder">
-                            <input placeholder="Zadejte název příspěvku" type="text" name="nazev" style="width: 100%; height: 100%" <?php if(isset($post)) echo 'value="'.$post->nazev.'"';?>>
+                            <input placeholder="Zadejte název příspěvku" type="text" name="nazev" style="width: 100%; height: 100%" <?php if(isset($post)) echo 'value="'.$post->nazev.'"';?> maxlength="255">
                         </div>
                         <div class="textarea-holder">
-                            <textarea id="textInput" name="text" placeholder="Zadejte text"><?php if(isset($post)) echo $post->text;?></textarea>
+                            <textarea id="textInput" name="text" placeholder="Zadejte text" maxlength="255"><?php if(isset($post)) echo $post->text;?></textarea>
                         </div>
                     </div>
                 </div>
