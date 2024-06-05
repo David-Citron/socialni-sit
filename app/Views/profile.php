@@ -242,6 +242,8 @@
             console.log(data);
             var postsCount = data['posts'].length;
             
+            if(postsCount == 0) return;
+
             for (var j = 0; j < postsCount; j++){
                 var nextPost = data['posts'][j];
                 currentId = nextPost['id'];
@@ -283,17 +285,11 @@
         var comments = '';
         if(nextPost['comments'] != null){
             for (var i=0; i< nextPost['comments'].length; i++){
-                comments = comments + '<div class="col-12 col-lg-3 mb-2" id="commenterHolding'+nextPost['id']+'"><div class="d-flex"><img src="'+nextPost['comments'][i]['uzivatel_foto']+'" alt="Avatar Logo" style="width:50px; height: auto; " class=" rounded-pill"><p class="small my-auto" style="margin-left: 8px;">'+nextPost['comments'][i]['uzivatel_jmeno']+'</p></div></div><div class="col-12 col-lg-9';
-                if(i != nextPost['comments'].length - 1){
-                    comments = comments + ' mb-4';
-                }else{
-                    comments = comments + ' mb-0';
-                }
-                comments = comments + '" ';
+                comments = comments + '<div class="col-12 col-lg-3 mb-2" id="commenterHolding'+nextPost['id']+'"><div class="d-flex"><img src="'+nextPost['comments'][i]['uzivatel_foto']+'" alt="Avatar Logo" style="width:50px; height: auto; " class=" rounded-pill"><p class="small my-auto" style="margin-left: 8px;">'+nextPost['comments'][i]['uzivatel_jmeno']+'</p></div></div><div class="col-12 col-lg-9>';
                 if(i == nextPost['comments'].length - 1){
                     comments = comments + ' id="commentHolding'+nextPost['id']+'"';
                 }
-                comments = comments + '><p ';
+                comments = comments + '<p class="mb-0" ';
                 if(i == nextPost['comments'].length - 1){
                     comments = comments + 'class="mb-0" id="commentParagraph'+nextPost['id']+'"';
                 }
