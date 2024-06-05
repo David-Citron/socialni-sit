@@ -184,8 +184,9 @@
         prevScrollpos = currentScrollPos;
     }
 
+    var scrollLoadOffset = window.innerHeight * 2;
     function isBottom() {
-        return window.innerHeight + window.scrollY >= document.body.offsetHeight;
+        return window.innerHeight + window.scrollY >= document.body.offsetHeight - scrollLoadOffset;
     }
 
     function handleScroll() {

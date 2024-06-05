@@ -17,7 +17,7 @@
         }
     </style>
 </head>
-<body>
+<body class="pb-4">
     <div class="container-fluid" style="background-color: #BEBEBE; min-height:25vh">
         <div class="d-flex justify-content-end">
         <a href="<?= base_url('/')?>"><i class="fa-solid fa-house h3 m-2 text-white" style="color: white;"></i></a>
@@ -196,19 +196,9 @@
 
     ";?>
 
-    var prevScrollpos = window.pageYOffset;
-    window.onscroll = function() {
-        var currentScrollPos = window.pageYOffset;
-        if (prevScrollpos > currentScrollPos) {
-            document.getElementById("navbar").style.top = "0";
-        } else {
-            document.getElementById("navbar").style.top = "-100px";
-        }
-        prevScrollpos = currentScrollPos;
-    }
-
+    var scrollLoadOffset = window.innerHeight * 2;
     function isBottom() {
-        return window.innerHeight + window.scrollY >= document.body.offsetHeight;
+        return window.innerHeight + window.scrollY >= document.body.offsetHeight - scrollLoadOffset;
     }
 
     function handleScroll() {
