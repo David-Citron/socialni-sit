@@ -1,3 +1,6 @@
+## Informace
+Vzhledem, že na našem projektu běží databáze, která běží vzdáleně, tak budete potřebovat přístupové údaje, které vzhledem bezpečnosti nejsou nikde zapsané. Pokud si projekt chcete zobrazit, tak prosíme o kontaktování.
+
 ## Wireframe
 Odkaz na wireframe: https://wireframe.cc/by6g17
 <br>
