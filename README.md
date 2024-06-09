@@ -13,3 +13,6 @@ Odkaz na grafický návrh: https://xd.adobe.com/view/973f6048-e9e9-4e28-a284-8ff
 ![alt text](image-1.png)
 ## ER diagram ver. 03
 ![alt text](image-2.png)
+
+## Dokumentace k projektu
+https://oauh-my.sharepoint.com/:w:/g/personal/rumisek_martin_oauh_cz/Eam1ceJ9K8tEr4R7GPuFn_MB6KatdIsBfNAqLy5E02x3_w?e=Ue3rWy
